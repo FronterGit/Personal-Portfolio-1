@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EventBus;
 
 public class Enemy : MonoBehaviour
 {
@@ -39,7 +40,12 @@ public class Enemy : MonoBehaviour
         }
         if(waypointIndex == waypoints.Length)
         {
-            Destroy(gameObject);
+            Death();
         }
+    }
+
+    private void Death()
+    {
+        EventBus<RemoveEnemyEvent>.Raise(new RemoveEnemyEvent(gameObject));
     }
 }

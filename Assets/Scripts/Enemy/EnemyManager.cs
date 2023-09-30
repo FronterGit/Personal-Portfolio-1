@@ -12,12 +12,14 @@ public class EnemyManager : MonoBehaviour
     {
         EventBus<EnemyRouteEvent>.Subscribe(SetEnemyRoute);
         EventBus<EnemySpawnEvent>.Subscribe(SpawnEnemy);
+        EventBus<RemoveEnemyEvent>.Subscribe(RemoveEnemy);
     }
 
     private void OnDisable()
     {
         EventBus<EnemyRouteEvent>.Unsubscribe(SetEnemyRoute);
         EventBus<EnemySpawnEvent>.Unsubscribe(SpawnEnemy);
+        EventBus<RemoveEnemyEvent>.Unsubscribe(RemoveEnemy);
     }
 
     private void SetEnemyRoute(EnemyRouteEvent e)
@@ -30,5 +32,11 @@ public class EnemyManager : MonoBehaviour
         GameObject enemy = Instantiate(e.enemy, waypoints[0].position, Quaternion.identity);
         enemy.GetComponent<Enemy>().SetWaypoints(waypoints);
         enemies.Add(enemy.GetComponent<Enemy>());
+    }
+
+    public void RemoveEnemy(RemoveEnemyEvent e)
+    {
+        enemies.Remove(e.enemy.GetComponent<Enemy>());
+        Destroy(e.enemy);
     }
 }

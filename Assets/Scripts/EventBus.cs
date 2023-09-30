@@ -45,4 +45,14 @@ namespace EventBus
             this.enemy = enemy;
         }
     }
+
+    public class RemoveEnemyEvent : Event
+    {
+        public GameObject enemy;
+
+        public RemoveEnemyEvent(GameObject enemy)
+        {
+            this.enemy = enemy;
+        }
+    }
 }
