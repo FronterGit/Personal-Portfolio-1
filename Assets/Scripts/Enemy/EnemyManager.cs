@@ -13,6 +13,7 @@ public class EnemyManager : MonoBehaviour
         EventBus<EnemyRouteEvent>.Subscribe(SetEnemyRoute);
         EventBus<EnemySpawnEvent>.Subscribe(SpawnEnemy);
         EventBus<RemoveEnemyEvent>.Subscribe(RemoveEnemy);
+        EventBus<EnemyHitEvent>.Subscribe(DamageEnemy);
     }
 
     private void OnDisable()
@@ -20,6 +21,7 @@ public class EnemyManager : MonoBehaviour
         EventBus<EnemyRouteEvent>.Unsubscribe(SetEnemyRoute);
         EventBus<EnemySpawnEvent>.Unsubscribe(SpawnEnemy);
         EventBus<RemoveEnemyEvent>.Unsubscribe(RemoveEnemy);
+        EventBus<EnemyHitEvent>.Unsubscribe(DamageEnemy);
     }
 
     private void SetEnemyRoute(EnemyRouteEvent e)
@@ -38,5 +40,16 @@ public class EnemyManager : MonoBehaviour
     {
         enemies.Remove(e.enemy.GetComponent<Enemy>());
         Destroy(e.enemy);
+    }
+
+    public void DamageEnemy(EnemyHitEvent e)
+    {
+        for(int i = 0; i < enemies.Count; i++)
+        {
+            if (enemies[i] == e.enemy)
+            {
+                enemies[i].TakeDamage(e.damage);
+            }
+        }
     }
 }

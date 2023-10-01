@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] private Transform[] waypoints;
     [SerializeField] private int waypointIndex = 0;
+    [SerializeField] float routeProgress = 0f;
 
     private void Start()
     {
@@ -30,6 +31,7 @@ public class Enemy : MonoBehaviour
     private void Move()
     {
         transform.position = Vector2.MoveTowards(transform.position, waypoints[waypointIndex].position, speed * Time.deltaTime);
+        routeProgress++;
     }
 
     private void CheckPos()
@@ -44,8 +46,22 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        if(health <= 0)
+        {
+            Death();
+        }
+    }
+
     private void Death()
     {
         EventBus<RemoveEnemyEvent>.Raise(new RemoveEnemyEvent(gameObject));
+    }
+
+    public float GetRouteProgress()
+    {
+        return routeProgress;
     }
 }

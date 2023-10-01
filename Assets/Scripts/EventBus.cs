@@ -55,4 +55,16 @@ namespace EventBus
             this.enemy = enemy;
         }
     }
+
+    public class EnemyHitEvent : Event
+    {
+        public int damage;
+        public Enemy enemy;
+
+        public EnemyHitEvent(int damage, Enemy enemy)
+        {
+            this.damage = damage;
+            this.enemy = enemy;
+        }
+    }
 }
