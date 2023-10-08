@@ -13,6 +13,7 @@ public abstract class Tower : MonoBehaviour
 
     [Header("Unity Setup Fields")]
     [SerializeField] public GameObject bulletPrefab;
+    [SerializeField] public GameObject placePrefab;
     [SerializeField] public Transform firePoint;
     [SerializeField] public Transform target;
     [SerializeField] public CircleCollider2D rangeCollider;
@@ -38,7 +39,7 @@ public abstract class Tower : MonoBehaviour
 
             if (target != null)
             {
-                Shoot();
+                Attack();
             }
 
             //Wait for the fireRate before shooting again
@@ -51,7 +52,7 @@ public abstract class Tower : MonoBehaviour
     #region Tower Methods
     public abstract void SetTarget(List<Enemy> enemies);
 
-    public abstract void Shoot();
+    public abstract void Attack();
     #endregion
 
     #region Enemies in Range
@@ -78,6 +79,13 @@ public abstract class Tower : MonoBehaviour
             //If there are no more enemies in range, stop shooting
             if (enemiesInRange.Count == 0) StopAllCoroutines();
         }
+    }
+    #endregion
+    
+    #region Getters and Setters
+    public GameObject GetPlacePrefab()
+    {
+        return placePrefab;
     }
     #endregion
 }

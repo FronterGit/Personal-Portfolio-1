@@ -9,7 +9,7 @@ public class ArrowTower : Tower
         this.target = enemies[0].transform;
     }
 
-    public override void Shoot()
+    public override void Attack()
     {
         //Instantiate a bullet and initialize it with the target and the tower's stats
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
