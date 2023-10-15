@@ -1,6 +1,7 @@
 using EventBus;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
@@ -32,24 +33,25 @@ public class EnemyManager : MonoBehaviour
     public void SpawnEnemy(EnemySpawnEvent e)
     {
         GameObject enemy = Instantiate(e.enemy, waypoints[0].position, Quaternion.identity);
-        enemy.GetComponent<Enemy>().SetWaypoints(waypoints);
-        enemies.Add(enemy.GetComponent<Enemy>());
+        var enemyScript = enemy.GetComponent<Enemy>();
+        enemyScript.SetWaypoints(waypoints);
+        
+        enemies.Add(enemyScript);
     }
 
     public void RemoveEnemy(RemoveEnemyEvent e)
     {
-        enemies.Remove(e.enemy.GetComponent<Enemy>());
+        enemies.Remove(e.enemyScript);
         Destroy(e.enemy);
     }
 
     public void DamageEnemy(EnemyHitEvent e)
     {
-        for(int i = 0; i < enemies.Count; i++)
+        var localEnemies = enemies;
+        foreach (var t in localEnemies.Where(t => t == e.enemy))
         {
-            if (enemies[i] == e.enemy)
-            {
-                enemies[i].TakeDamage(e.damage);
-            }
+            t.TakeDamage(e.damage);
+            break;
         }
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace EventBus
 {
@@ -49,10 +50,12 @@ namespace EventBus
     public class RemoveEnemyEvent : Event
     {
         public GameObject enemy;
+        public Enemy enemyScript;
 
         public RemoveEnemyEvent(GameObject enemy)
         {
             this.enemy = enemy;
+            this.enemyScript = enemy.GetComponent<Enemy>();
         }
     }
 
@@ -67,4 +70,34 @@ namespace EventBus
             this.enemy = enemy;
         }
     }
+
+    public class MouseInputEvent : Event
+    {
+        public PlayerInput.MouseButton mouseButton;
+        public MouseInputEvent(PlayerInput.MouseButton mouseButton)
+        {
+            this.mouseButton = mouseButton;
+        }
+    }
+
+    public class ChangeGoldEvent : Event
+    {
+        public int amount;
+        
+        public ChangeGoldEvent(int amount)
+        {
+            this.amount = amount;
+        }
+    }
+    
+    public class ChangeLivesEvent : Event
+    {
+        public int amount;
+        
+        public ChangeLivesEvent(int amount)
+        {
+            this.amount = amount;
+        }
+    }
 }
+

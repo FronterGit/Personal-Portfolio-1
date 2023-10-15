@@ -9,31 +9,33 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private List<Wave> waves;
     [SerializeField] private int currentWaveIndex = 0;
     [SerializeField] private int currentSubwaveIndex = 0;
+    bool waveInProgress = false;
 
     //Method called by the start wave button in the UI
     public void StartWave()
     {
-        StartCoroutine(SpawnWave());
+        if(!waveInProgress) StartCoroutine(SpawnWave());
     }
 
     private IEnumerator SpawnWave()
     {
+        //Set the wave in progress to true, so that the player can't start another wave while one is in progress
+        waveInProgress = true;
+        
         //For each subwave in the current wave...
         for (int i = 0; i < waves[currentWaveIndex].subwaves.Count; i++)
         {
-            //...spawn an enemy...
+            //spawn an enemy...
             for (int spawn = 0; spawn < waves[currentWaveIndex].subwaves[currentSubwaveIndex].GetAmountToSpawn(); spawn++)
             {
                 GameObject enemy = waves[currentWaveIndex].subwaves[currentSubwaveIndex].GetEnemyPrefab();
                 EventBus<EnemySpawnEvent>.Raise(new EnemySpawnEvent(enemy));
 
-                //...and wait for the time between spawns before spawning the next enemy
+                //and wait for the time between spawns before spawning the next enemy
                 yield return new WaitForSeconds(waves[currentWaveIndex].subwaves[currentSubwaveIndex].GetTimeBetweenSpawns());
             }
-
             //Then wait for the time between subwaves before spawning the next subwave
             yield return new WaitForSeconds(waves[currentWaveIndex].subwaves[currentSubwaveIndex].GetTimeBetweenSubwaves());
-
 
             //If there is another subwave in the current wave, increment the subwave index
             if (currentSubwaveIndex + 1 < waves[currentWaveIndex].subwaves.Count) currentSubwaveIndex++;
@@ -48,6 +50,9 @@ public class WaveManager : MonoBehaviour
             {
                 Debug.Log("Level complete");
             }
+            
+            //Set the wave in progress to false, so that the player can start another wave
+            waveInProgress = false;
         }
     }
 }

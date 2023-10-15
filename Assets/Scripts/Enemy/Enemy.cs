@@ -7,6 +7,7 @@ public class Enemy : MonoBehaviour
 {
     [SerializeField] private float speed = 4f;
     [SerializeField] private int health = 5;
+    [SerializeField] private int goldDrop = 1;
 
     [SerializeField] private Transform[] waypoints;
     [SerializeField] private int waypointIndex = 0;
@@ -42,7 +43,7 @@ public class Enemy : MonoBehaviour
         }
         if(waypointIndex == waypoints.Length)
         {
-            Death();
+            Death(true);
         }
     }
 
@@ -51,17 +52,21 @@ public class Enemy : MonoBehaviour
         health -= damage;
         if(health <= 0)
         {
-            Death();
+            Death(false );
         }
     }
 
-    private void Death()
+    protected virtual void Death(bool reachedEnd)
     {
+        //Raise all events that need to be raised when an enemy dies
+        EventBus<ChangeGoldEvent>.Raise(new ChangeGoldEvent(goldDrop));
         EventBus<RemoveEnemyEvent>.Raise(new RemoveEnemyEvent(gameObject));
+
+        if (reachedEnd) EventBus<ChangeLivesEvent>.Raise(new ChangeLivesEvent(-1));
     }
 
-    public float GetRouteProgress()
+    public int GetGoldDrop()
     {
-        return routeProgress;
+        return goldDrop;
     }
 }

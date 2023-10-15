@@ -45,14 +45,14 @@ public class PlaceTowerPrefab : MonoBehaviour
     {
         if (other.CompareTag("hitbox"))
         {
-            foreach(SpriteRenderer spriteRenderer in spriteRenderers)
+            foreach (SpriteRenderer spriteRenderer in spriteRenderers)
             {
                 spriteRenderer.color = new Color(Color.red.r, Color.red.g, Color.red.b, 0.5f);
             }
         }
-        else if(other.CompareTag("ground"))
+        else if (other.CompareTag("ground"))
         {
-            foreach(SpriteRenderer spriteRenderer in spriteRenderers)
+            foreach (SpriteRenderer spriteRenderer in spriteRenderers)
             {
                 spriteRenderer.color = new Color(Color.white.r, Color.white.g, Color.white.b, 0.5f);
             }
