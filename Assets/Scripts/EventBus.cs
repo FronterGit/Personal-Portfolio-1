@@ -99,5 +99,17 @@ namespace EventBus
             this.amount = amount;
         }
     }
+
+    public class UpdateUIEvent : Event
+    {
+        public string kvp;
+        public int value;
+        
+        public UpdateUIEvent(string kvp, int value)
+        {
+            this.kvp = kvp;
+            this.value = value;
+        }
+    }
 }
 

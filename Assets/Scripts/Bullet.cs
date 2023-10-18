@@ -30,11 +30,11 @@ public class Bullet : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.CompareTag("Enemy"))
         {
-            OnHitEnemy();
+            OnHitEnemy(collision.GetComponent<Enemy>());
             Destroy(gameObject);
         }
     }
@@ -44,8 +44,9 @@ public class Bullet : MonoBehaviour
         transform.position = Vector2.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
     }
 
-    private void OnHitEnemy()
-    {
-        EventBus<EnemyHitEvent>.Raise(new EnemyHitEvent(damage, target.GetComponent<Enemy>()));
+    protected virtual void OnHitEnemy(Enemy enemy)
+    { 
+        enemy.TakeDamage(damage);
+        //EventBus<EnemyHitEvent>.Raise(new EnemyHitEvent(damage, target.GetComponent<Enemy>()));
     }
 }

@@ -11,6 +11,8 @@ public abstract class Tower : MonoBehaviour
     [SerializeField] public int damage = 1;
     [SerializeField] public float fireRate = 1f;
     [SerializeField] public float bulletSpeed = 5f;
+    public int cost = 1;
+    [SerializeField] public string towerName = "Tower";
 
     [Header("Unity Setup Fields")]
     [SerializeField] public GameObject bulletPrefab;
@@ -89,4 +91,9 @@ public abstract class Tower : MonoBehaviour
         return placePrefab;
     }
     #endregion
+
+    public void SetCost(int amount)
+    {
+        cost = amount;
+    }
 }

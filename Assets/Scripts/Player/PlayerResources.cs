@@ -31,6 +31,12 @@ public class PlayerResources : MonoBehaviour
         Debug.Log("PlayerResources Instance set to " + Instance);
     }
 
+    void Start()
+    {
+        EventBus<UpdateUIEvent>.Raise(new UpdateUIEvent("gold", gold));
+        EventBus<UpdateUIEvent>.Raise(new UpdateUIEvent("lives", lives));
+    }
+
     private void ChangeGold(ChangeGoldEvent e)
     {
         gold += e.amount;

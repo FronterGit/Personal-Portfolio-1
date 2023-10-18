@@ -47,11 +47,9 @@ public class EnemyManager : MonoBehaviour
 
     public void DamageEnemy(EnemyHitEvent e)
     {
-        var localEnemies = enemies;
-        foreach (var t in localEnemies.Where(t => t == e.enemy))
+        for (int i = 0; i < enemies.Count; i++)
         {
-            t.TakeDamage(e.damage);
-            break;
+            if(enemies[i] == e.enemy) enemies[i].TakeDamage(e.damage);
         }
     }
 }
