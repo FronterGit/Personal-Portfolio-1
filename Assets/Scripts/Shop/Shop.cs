@@ -20,7 +20,10 @@ public class Shop : MonoBehaviour
 {
     private bool buying;
     private GameObject towerToBuy;
+    private Tower towerScript;
     [SerializeField] private List<TowerCost> towersCosts;
+
+    
 
     private void OnEnable()
     {
@@ -32,6 +35,7 @@ public class Shop : MonoBehaviour
         if(buying) return;
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         towerToBuy = Instantiate(tower.GetPlacePrefab(), mousePos, Quaternion.identity);
+        towerScript = towerToBuy.GetComponent<Tower>();
         buying = true;
     }
 
@@ -56,7 +60,12 @@ public class Shop : MonoBehaviour
         if(!buying) return;
         if (e.mouseButton == PlayerInput.MouseButton.Left)
         {
-            if(PlayerResources.Instance.gold > 5) Debug.Log("tower can be bought");
+            if(Resource.resourceValues["gold"]?.value > towerScript.cost)
+            {
+                //PlayerResources.Instance.ChangeGold(-towerScript.cost);
+                Destroy(towerToBuy);
+                buying = false;
+            }
 
         }
         else

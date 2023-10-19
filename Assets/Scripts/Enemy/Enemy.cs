@@ -58,11 +58,10 @@ public class Enemy : MonoBehaviour
 
     protected virtual void Death(bool reachedEnd)
     {
-        //Raise all events that need to be raised when an enemy dies
-        EventBus<ChangeGoldEvent>.Raise(new ChangeGoldEvent(goldDrop));
+        if (!reachedEnd) PlayerResources.changeResourceAction?.Invoke("gold", goldDrop);
+        else PlayerResources.changeResourceAction?.Invoke("lives", -1);
+        
         EventBus<RemoveEnemyEvent>.Raise(new RemoveEnemyEvent(gameObject));
-
-        if (reachedEnd) EventBus<ChangeLivesEvent>.Raise(new ChangeLivesEvent(-1));
     }
 
     public int GetGoldDrop()

@@ -45,6 +45,9 @@ public class WaveManager : MonoBehaviour
             {
                 currentWaveIndex++;
                 currentSubwaveIndex = 0;
+                
+                PlayerResources.changeResourceAction?.Invoke("waves", 1);
+                //EventBus<UpdateUIEvent>.Raise(new UpdateUIEvent("waves", currentWaveIndex + 1));
             }
             else
             {

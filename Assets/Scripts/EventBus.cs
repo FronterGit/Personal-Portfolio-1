@@ -102,13 +102,11 @@ namespace EventBus
 
     public class UpdateUIEvent : Event
     {
-        public string kvp;
-        public int value;
+        public string name;
         
-        public UpdateUIEvent(string kvp, int value)
+        public UpdateUIEvent(string name)
         {
-            this.kvp = kvp;
-            this.value = value;
+            this.name = name;
         }
     }
 }
