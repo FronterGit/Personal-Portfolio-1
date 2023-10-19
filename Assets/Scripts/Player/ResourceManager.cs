@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEngine;
 
 [System.Serializable]
-public class PlayerResources : MonoBehaviour
+public class ResourceManager : MonoBehaviour
 {
     private Guid guid = Guid.NewGuid();
     

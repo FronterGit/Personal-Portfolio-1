@@ -41,14 +41,6 @@ public class PlaceTowerPrefab : MonoBehaviour
                 placeable = true;
             }
         }
-        else if(other.CompareTag("ground"))
-        {
-            foreach(SpriteRenderer spriteRenderer in spriteRenderers)
-            {
-                spriteRenderer.color = new Color(Color.red.r, Color.red.g, Color.red.b, 0.5f);
-                placeable = false;
-            }
-        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -59,14 +51,6 @@ public class PlaceTowerPrefab : MonoBehaviour
             {
                 spriteRenderer.color = new Color(Color.red.r, Color.red.g, Color.red.b, 0.5f);
                 placeable = false;
-            }
-        }
-        else if (other.CompareTag("ground"))
-        {
-            foreach (SpriteRenderer spriteRenderer in spriteRenderers)
-            {
-                spriteRenderer.color = new Color(Color.white.r, Color.white.g, Color.white.b, 0.5f);
-                placeable = true;
             }
         }
     }

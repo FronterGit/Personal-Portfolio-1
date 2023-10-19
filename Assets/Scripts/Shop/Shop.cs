@@ -62,7 +62,7 @@ public class Shop : MonoBehaviour
         if(!buying || towerToBuy == null) return;
         if (e.mouseButton == PlayerInput.MouseButton.Left)
         {
-            if(PlayerResources.getResourceValueFunc("gold") >= towerToBuyScript.towerStats.cost && towerToBuyScript.placeable)
+            if(ResourceManager.getResourceValueFunc("gold") >= towerToBuyScript.towerStats.cost && towerToBuyScript.placeable)
             {
                 PlaceTower();
                 buying = false;
@@ -78,7 +78,7 @@ public class Shop : MonoBehaviour
     private void PlaceTower()
     {
         Instantiate(towerToBuyScript.towerPrefab, towerToBuy.transform.position, Quaternion.identity);
-        PlayerResources.changeResourceAction?.Invoke("gold", -towerToBuyScript.towerStats.cost);
+        ResourceManager.changeResourceAction?.Invoke("gold", -towerToBuyScript.towerStats.cost);
         Destroy(towerToBuy);
     }
 

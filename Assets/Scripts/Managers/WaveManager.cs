@@ -14,7 +14,7 @@ public class WaveManager : MonoBehaviour
 
     private void Start()
     {
-        PlayerResources.changeResourceAction?.Invoke("totalWaves", waves.Count);
+        ResourceManager.changeResourceAction?.Invoke("totalWaves", waves.Count);
     }
 
     //Method called by the start wave button in the UI
@@ -52,7 +52,7 @@ public class WaveManager : MonoBehaviour
                 currentWaveIndex++;
                 currentSubwaveIndex = 0;
                 
-                PlayerResources.changeResourceAction?.Invoke("waves", 1);
+                ResourceManager.changeResourceAction?.Invoke("waves", 1);
                 //EventBus<UpdateUIEvent>.Raise(new UpdateUIEvent("waves", currentWaveIndex + 1));
             }
             else
