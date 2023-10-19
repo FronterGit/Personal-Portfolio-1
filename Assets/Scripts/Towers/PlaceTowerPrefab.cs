@@ -2,21 +2,27 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlaceTowerPrefab : MonoBehaviour
 {
     private SpriteRenderer[] spriteRenderers;
     public bool placeable = true;
+    
     public GameObject towerPrefab;
+    public Tower towerStats;
+
+    public GameObject rangeIndicator;
 
     private void Start()
     {
+        rangeIndicator.transform.localScale = new Vector3(towerStats.range * 2, towerStats.range * 2, 0);
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
         foreach(SpriteRenderer spriteRenderer in spriteRenderers)
         {
             spriteRenderer.color = new Color(Color.red.r, Color.red.g, Color.red.b, 0.5f);
         }
-        
+
     }
 
     void Update()

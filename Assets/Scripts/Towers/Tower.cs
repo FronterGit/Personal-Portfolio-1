@@ -83,6 +83,7 @@ public abstract class Tower : MonoBehaviour
             if (enemiesInRange.Count == 0) StopAllCoroutines();
         }
     }
+    
     #endregion
     
     #region Getters and Setters

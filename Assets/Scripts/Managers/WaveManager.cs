@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,11 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private int currentWaveIndex = 0;
     [SerializeField] private int currentSubwaveIndex = 0;
     bool waveInProgress = false;
+
+    private void Start()
+    {
+        PlayerResources.changeResourceAction?.Invoke("totalWaves", waves.Count);
+    }
 
     //Method called by the start wave button in the UI
     public void StartWave()
