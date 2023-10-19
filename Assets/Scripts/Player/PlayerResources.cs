@@ -2,53 +2,44 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using EventBus;
+using UnityEditor;
 using UnityEngine;
 
 [System.Serializable]
 public class PlayerResources : MonoBehaviour
 {
-    public static PlayerResources Instance { get; private set; }
+    private Guid guid = Guid.NewGuid();
     
     [SerializeField] private List<Resource> resources;
-    
-    //private Dictionary<string, Resource> resourceValues = new Dictionary<string, Resource>();
+    public Dictionary<string, Resource> resourceValues = new();
     
     public static Action<string, int> changeResourceAction;
+    public static Func<string, int> getResourceValueFunc;
 
     private void OnEnable()
     {
-        EventBus<ChangeGoldEvent>.Subscribe(ChangeGold);
-        EventBus<ChangeLivesEvent>.Subscribe(ChangeLives);
-        
         changeResourceAction += ChangeResource;
-        
-        
+        getResourceValueFunc += GetResourceValue;
     }
 
     private void OnDisable()
     {
-        EventBus<ChangeGoldEvent>.Unsubscribe(ChangeGold);
-        EventBus<ChangeLivesEvent>.Unsubscribe(ChangeLives);
-        
         changeResourceAction -= ChangeResource;
+        getResourceValueFunc -= GetResourceValue;
+        
     }
 
     private void Awake()
     {
-        if(Instance != null && Instance != this) Destroy(this);
-        else Instance = this;
-
         InitializeResources();
         InitializeDictionary();
-        
-        Debug.Log("PlayerResources Instance set to " + Instance);
     }
 
     void Start()
     {
-        foreach (var entry in Resource.resourceValues)
+        foreach (var entry in resourceValues)
         {
-            EventBus<UpdateUIEvent>.Raise(new UpdateUIEvent(entry.Key));
+            UpdateResourceUI(resourceValues[entry.Key].name, resourceValues[entry.Key].value);
         }
     }
 
@@ -64,26 +55,25 @@ public class PlayerResources : MonoBehaviour
     {
         foreach (Resource resource in Resource.resources)
         {
-            Resource.resourceValues.Add(resource.name, resource);
+            resourceValues.Add(resource.name, resource);
         }
-    }
-
-    private void ChangeGold(ChangeGoldEvent e)
-    {
-        Resource.resourceValues["gold"].value += e.amount;
-        EventBus<UpdateUIEvent>.Raise(new UpdateUIEvent("gold"));
-    }
-    
-    private void ChangeLives(ChangeLivesEvent e)
-    {
-        Resource.resourceValues["lives"].value += e.amount;
-        EventBus<UpdateUIEvent>.Raise(new UpdateUIEvent("lives"));
+        Resource.resourcesContainer.Add(guid, resourceValues);
     }
     
     public void ChangeResource(string resource, int amount)
     {
-        Resource.resourceValues[resource].value += amount;
-        EventBus<UpdateUIEvent>.Raise(new UpdateUIEvent(resource));
+        int newValue = Resource.resourcesContainer[guid][resource].value += amount;    
+        UpdateResourceUI(resource, newValue);
+    }
+
+    private void UpdateResourceUI(string resource, int amount)
+    {
+        Resource.resourcesContainer[guid][resource].text.text = amount.ToString();    
+    }
+    
+    public int GetResourceValue(string resource)
+    {
+        return Resource.resourcesContainer[guid][resource].value;
     }
 
 }

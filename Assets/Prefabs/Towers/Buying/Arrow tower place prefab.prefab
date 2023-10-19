@@ -248,6 +248,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2eea109c98b8494793b3c81b037f46c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  placeable: 1
+  towerPrefab: {fileID: 7516184778551912310, guid: 43b17abecc104344fa98ff68d03bae9b, type: 3}
 --- !u!60 &3059934731640301434
 PolygonCollider2D:
   m_ObjectHideFlags: 0

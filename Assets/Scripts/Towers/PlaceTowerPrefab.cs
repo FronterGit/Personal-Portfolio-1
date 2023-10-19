@@ -6,6 +6,8 @@ using UnityEngine;
 public class PlaceTowerPrefab : MonoBehaviour
 {
     private SpriteRenderer[] spriteRenderers;
+    public bool placeable = true;
+    public GameObject towerPrefab;
 
     private void Start()
     {
@@ -30,6 +32,7 @@ public class PlaceTowerPrefab : MonoBehaviour
             foreach(SpriteRenderer spriteRenderer in spriteRenderers)
             {
                 spriteRenderer.color = new Color(Color.white.r, Color.white.g, Color.white.b, 0.5f);
+                placeable = true;
             }
         }
         else if(other.CompareTag("ground"))
@@ -37,6 +40,7 @@ public class PlaceTowerPrefab : MonoBehaviour
             foreach(SpriteRenderer spriteRenderer in spriteRenderers)
             {
                 spriteRenderer.color = new Color(Color.red.r, Color.red.g, Color.red.b, 0.5f);
+                placeable = false;
             }
         }
     }
@@ -48,6 +52,7 @@ public class PlaceTowerPrefab : MonoBehaviour
             foreach (SpriteRenderer spriteRenderer in spriteRenderers)
             {
                 spriteRenderer.color = new Color(Color.red.r, Color.red.g, Color.red.b, 0.5f);
+                placeable = false;
             }
         }
         else if (other.CompareTag("ground"))
@@ -55,6 +60,7 @@ public class PlaceTowerPrefab : MonoBehaviour
             foreach (SpriteRenderer spriteRenderer in spriteRenderers)
             {
                 spriteRenderer.color = new Color(Color.white.r, Color.white.g, Color.white.b, 0.5f);
+                placeable = true;
             }
         }
     }

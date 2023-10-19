@@ -6,6 +6,9 @@ using System.Runtime.Serialization;
 
 public class Overseer<TKey, TValue> : Dictionary<TKey, TValue>
 {
+    public Overseer()
+    {
+    }
 
     public Overseer([NotNull] IDictionary<TKey, TValue> dictionary) : base(dictionary)
     {

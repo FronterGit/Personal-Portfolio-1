@@ -79,35 +79,5 @@ namespace EventBus
             this.mouseButton = mouseButton;
         }
     }
-
-    public class ChangeGoldEvent : Event
-    {
-        public int amount;
-        
-        public ChangeGoldEvent(int amount)
-        {
-            this.amount = amount;
-        }
-    }
-    
-    public class ChangeLivesEvent : Event
-    {
-        public int amount;
-        
-        public ChangeLivesEvent(int amount)
-        {
-            this.amount = amount;
-        }
-    }
-
-    public class UpdateUIEvent : Event
-    {
-        public string name;
-        
-        public UpdateUIEvent(string name)
-        {
-            this.name = name;
-        }
-    }
 }
 

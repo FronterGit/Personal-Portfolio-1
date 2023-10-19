@@ -326,11 +326,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12a4456295dd8dc439b7965214e5f4c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 2
+  range: 5
   damage: 1
-  fireRate: 1
+  fireRate: 2
   bulletSpeed: 5
-  cost: 1
+  cost: 10
   towerName: Arrow Tower
   bulletPrefab: {fileID: 5557141635670938561, guid: 47eb76f9f68f63241b1214568480a676, type: 3}
   placePrefab: {fileID: 7516184778551912310, guid: 40a43b4f338c6f84ba9deb606a5077cf, type: 3}

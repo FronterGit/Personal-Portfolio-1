@@ -20,7 +20,8 @@ public class Shop : MonoBehaviour
 {
     private bool buying;
     private GameObject towerToBuy;
-    private Tower towerScript;
+    private Tower towerStats;
+    private PlaceTowerPrefab placeTowerScript;
     [SerializeField] private List<TowerCost> towersCosts;
 
     
@@ -35,7 +36,8 @@ public class Shop : MonoBehaviour
         if(buying) return;
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         towerToBuy = Instantiate(tower.GetPlacePrefab(), mousePos, Quaternion.identity);
-        towerScript = towerToBuy.GetComponent<Tower>();
+        towerStats = tower;
+        placeTowerScript = towerToBuy.GetComponent<PlaceTowerPrefab>();
         buying = true;
     }
 
@@ -57,22 +59,27 @@ public class Shop : MonoBehaviour
 
     private void OnTowerBuy(MouseInputEvent e)
     {
-        if(!buying) return;
+        if(!buying || towerToBuy == null) return;
         if (e.mouseButton == PlayerInput.MouseButton.Left)
         {
-            if(Resource.resourceValues["gold"]?.value > towerScript.cost)
+            if(PlayerResources.getResourceValueFunc("gold") >= towerStats.cost && placeTowerScript.placeable)
             {
-                //PlayerResources.Instance.ChangeGold(-towerScript.cost);
-                Destroy(towerToBuy);
+                PlaceTower();
                 buying = false;
             }
-
         }
         else
         {
             Destroy(towerToBuy);
             buying = false;
         }
+    }
+
+    private void PlaceTower()
+    {
+        Instantiate(placeTowerScript.towerPrefab, towerToBuy.transform.position, Quaternion.identity);
+        PlayerResources.changeResourceAction?.Invoke("gold", -towerStats.cost);
+        Destroy(towerToBuy);
     }
 
 }
