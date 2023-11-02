@@ -3953,6 +3953,7 @@ MonoBehaviour:
   waves:
   - {fileID: 5928658722464366123, guid: e159efee18fd102488ca2cb7e5b11e9e, type: 3}
   - {fileID: 5928658722464366123, guid: 13ebb4d305eca604bb1ed883b4878fe9, type: 3}
+  - {fileID: 5928658722464366123, guid: 24b6ba3b92bd6924bb1c1e3c86f46378, type: 3}
   currentWaveIndex: 0
   currentSubwaveIndex: 0
 --- !u!4 &1397178028
@@ -3983,7 +3984,7 @@ GameObject:
   - component: {fileID: 1445409368}
   - component: {fileID: 1445409367}
   m_Layer: 5
-  m_Name: Next wave
+  m_Name: Start wave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6074,7 +6075,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Next wave
+  m_text: Start wave
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

@@ -46,10 +46,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   subwaves:
   - enemyPrefab: {fileID: 9530430136141074, guid: ba940d2496d74ec4aada6728adc406cc, type: 3}
-    amountToSpawn: 5
+    amountToSpawn: 3
+    timeBetweenSpawns: 1
+    timeBetweenSubwaves: 3
+  - enemyPrefab: {fileID: 9530430136141074, guid: ba940d2496d74ec4aada6728adc406cc, type: 3}
+    amountToSpawn: 4
     timeBetweenSpawns: 1
     timeBetweenSubwaves: 1
-  - enemyPrefab: {fileID: 9530430136141074, guid: ba940d2496d74ec4aada6728adc406cc, type: 3}
-    amountToSpawn: 10
-    timeBetweenSpawns: 1
-    timeBetweenSubwaves: 0

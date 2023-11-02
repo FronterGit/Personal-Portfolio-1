@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7254921476844966364}
   - component: {fileID: 5928658722464366123}
   m_Layer: 0
-  m_Name: Wave 2
+  m_Name: Wave 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,10 +46,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   subwaves:
   - enemyPrefab: {fileID: 9530430136141074, guid: ba940d2496d74ec4aada6728adc406cc, type: 3}
-    amountToSpawn: 10
-    timeBetweenSpawns: 0.1
+    amountToSpawn: 5
+    timeBetweenSpawns: 1
     timeBetweenSubwaves: 0
   - enemyPrefab: {fileID: 9530430136141074, guid: ba940d2496d74ec4aada6728adc406cc, type: 3}
     amountToSpawn: 3
-    timeBetweenSpawns: 1
+    timeBetweenSpawns: 2
     timeBetweenSubwaves: 0
