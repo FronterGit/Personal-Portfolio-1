@@ -31,6 +31,11 @@ public class Shop : MonoBehaviour
         EventBus<MouseInputEvent>.Subscribe(OnTowerBuy);
     }
 
+    private void OnDisable()
+    {
+        EventBus<MouseInputEvent>.Unsubscribe(OnTowerBuy);
+    }
+
     public void BuyTower(Tower tower)
     {
         if(buying) return;

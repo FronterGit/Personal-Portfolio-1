@@ -26,14 +26,16 @@ public class PlayerInput : MonoBehaviour
 
     private void OnPlayerInput(InputAction.CallbackContext obj)
     {
+        var mousePos = Camera.main.ScreenToWorldPoint( Input.mousePosition );
+        
         float mouseInput = obj.ReadValue<float>();  
         if (mouseInput < 0)
         {
-            EventBus<MouseInputEvent>.Raise(new MouseInputEvent(MouseButton.Left));
+            EventBus<MouseInputEvent>.Raise(new MouseInputEvent(MouseButton.Left, mousePos));
         }
         else
         {
-            EventBus<MouseInputEvent>.Raise(new MouseInputEvent(MouseButton.Right));
+            EventBus<MouseInputEvent>.Raise(new MouseInputEvent(MouseButton.Right, mousePos));
         }
 
     }

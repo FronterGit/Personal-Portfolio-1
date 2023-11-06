@@ -74,9 +74,11 @@ namespace EventBus
     public class MouseInputEvent : Event
     {
         public PlayerInput.MouseButton mouseButton;
-        public MouseInputEvent(PlayerInput.MouseButton mouseButton)
+        public Vector2 mousePos;
+        public MouseInputEvent(PlayerInput.MouseButton mouseButton, Vector2 mousePos)
         {
             this.mouseButton = mouseButton;
+            this.mousePos = mousePos;
         }
     }
 }

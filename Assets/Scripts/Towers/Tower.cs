@@ -3,6 +3,7 @@ using EventBus;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public abstract class Tower : MonoBehaviour
 {
@@ -20,8 +21,20 @@ public abstract class Tower : MonoBehaviour
     [SerializeField] public Transform firePoint;
     [SerializeField] public Transform target;
     [SerializeField] public CircleCollider2D rangeCollider;
+    [SerializeField] public GameObject rangeIndicator;
   
     [SerializeField] public List<Enemy> enemiesInRange;
+    private List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
+
+    private void OnEnable()
+    {
+        EventBus<MouseInputEvent>.Subscribe(ShowRange);
+    }
+    
+    private void OnDisable()
+    {
+        EventBus<MouseInputEvent>.Unsubscribe(ShowRange);
+    }
 
     private void Start()
     {
@@ -30,6 +43,16 @@ public abstract class Tower : MonoBehaviour
 
         //Convert fireRate to shots per second
         fireRate = 1 / fireRate;
+        
+        //Set the range indicator to the range of the tower
+        rangeIndicator.transform.localScale = new Vector3(range * 2, range * 2, 0);
+        rangeIndicator.SetActive(false);
+        
+        //Initialize the list spriteRenderers
+        foreach (SpriteRenderer s in this.GetComponentsInChildren<SpriteRenderer>())
+        {
+            spriteRenderers.Add(s);
+        }
     }
 
     private IEnumerator FireCooldown(float wait)
@@ -56,6 +79,23 @@ public abstract class Tower : MonoBehaviour
     public abstract void SetTarget(List<Enemy> enemies);
 
     public abstract void Attack();
+
+    public void ShowRange(MouseInputEvent e)
+    {
+        if(e.mouseButton == PlayerInput.MouseButton.Left && rangeIndicator.activeSelf == false)
+        {
+            foreach (SpriteRenderer s in spriteRenderers)
+            {
+                if (s.bounds.Contains(e.mousePos))
+                {
+                    rangeIndicator.SetActive(true);
+                    break;
+                }
+                rangeIndicator.SetActive(false);
+            }
+        }
+        else rangeIndicator.SetActive(false);
+    }
     #endregion
 
     #region Enemies in Range
