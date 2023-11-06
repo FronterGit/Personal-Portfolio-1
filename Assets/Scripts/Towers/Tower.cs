@@ -25,15 +25,16 @@ public abstract class Tower : MonoBehaviour
   
     [SerializeField] public List<Enemy> enemiesInRange;
     private List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
+    public bool selected;
 
     private void OnEnable()
     {
-        EventBus<MouseInputEvent>.Subscribe(ShowRange);
+        EventBus<MouseInputEvent>.Subscribe(CheckMouseOnTower);
     }
     
     private void OnDisable()
     {
-        EventBus<MouseInputEvent>.Unsubscribe(ShowRange);
+        EventBus<MouseInputEvent>.Unsubscribe(CheckMouseOnTower);
     }
 
     private void Start()
@@ -80,21 +81,48 @@ public abstract class Tower : MonoBehaviour
 
     public abstract void Attack();
 
-    public void ShowRange(MouseInputEvent e)
+    public void CheckMouseOnTower(MouseInputEvent e)
     {
-        if(e.mouseButton == PlayerInput.MouseButton.Left && rangeIndicator.activeSelf == false)
+        //If we receive a left mouse click and we are not selected...
+        if(e.mouseButton == PlayerInput.MouseButton.Left && !selected)
         {
+            //...check if the mouse is over one of the tower's sprites
             foreach (SpriteRenderer s in spriteRenderers)
             {
                 if (s.bounds.Contains(e.mousePos))
                 {
-                    rangeIndicator.SetActive(true);
+                    //If the mouse is over one of the tower's sprites, select the tower
+                    SelectTower(true);
                     break;
                 }
-                rangeIndicator.SetActive(false);
+                //If the mouse is not over one of the tower's sprites, deselect the tower.
+                SelectTower(false);
             }
         }
-        else rangeIndicator.SetActive(false);
+        //If it was a right mouse click or it was already selected, deselect the tower.
+        else SelectTower(false);
+    }
+
+    private void SelectTower(bool select)
+    {
+        //If this tower is selected...
+        if (select)
+        {
+            //Remember that this tower is selected, show the range indicator and raise an Event to let other scripts know
+            selected = true;
+            rangeIndicator.SetActive(true);
+            EventBus<TowerSelectedEvent>.Raise(new TowerSelectedEvent(this, true, true));
+        }
+        //If this tower is not selected...
+        else
+        {
+            //Let other scripts know we are not selected
+            rangeIndicator.SetActive(false);
+            EventBus<TowerSelectedEvent>.Raise(new TowerSelectedEvent(this, true, false));
+            
+            //And remember that we are not selected
+            selected = false;
+        }
     }
     #endregion
 

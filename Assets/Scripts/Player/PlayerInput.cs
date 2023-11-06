@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using EventBus;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class PlayerInput : MonoBehaviour
 {
+    [SerializeField] private LayerMask UILayerMask;
     [SerializeField] private InputActionReference onMousePress;
     public enum MouseButton
     {
@@ -28,9 +30,13 @@ public class PlayerInput : MonoBehaviour
     {
         var mousePos = Camera.main.ScreenToWorldPoint( Input.mousePosition );
         
-        float mouseInput = obj.ReadValue<float>();  
+        // var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        // bool hit = Physics2D.Raycast(ray.origin, ray.direction, Mathf.Infinity, UILayerMask);
+        
+        float mouseInput = obj.ReadValue<float>();
         if (mouseInput < 0)
         {
+            if(EventSystem.current.IsPointerOverGameObject()) return;
             EventBus<MouseInputEvent>.Raise(new MouseInputEvent(MouseButton.Left, mousePos));
         }
         else

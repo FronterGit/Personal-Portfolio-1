@@ -81,5 +81,19 @@ namespace EventBus
             this.mousePos = mousePos;
         }
     }
+
+    public class TowerSelectedEvent : Event
+    {
+        public Tower tower;
+        public bool bought;
+        public bool selected;
+        
+        public TowerSelectedEvent(Tower tower, bool bought, bool selected)
+        {
+            this.tower = tower;
+            this.bought = bought;
+            this.selected = selected;
+        }
+    }
 }
 
