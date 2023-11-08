@@ -6,6 +6,7 @@ using UnityEngine;
 public class Wave : MonoBehaviour
 {
     [SerializeField] public List<Subwave> subwaves;
+    public int waveReward;
 }
 
 [System.Serializable]

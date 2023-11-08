@@ -95,5 +95,13 @@ namespace EventBus
             this.selected = selected;
         }
     }
+    
+    public class WaveFinishedEvent : Event
+    {
+        public WaveFinishedEvent()
+        {
+            
+        }
+    }
 }
 

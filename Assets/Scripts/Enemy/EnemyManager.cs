@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Event = EventBus.Event;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -43,6 +44,11 @@ public class EnemyManager : MonoBehaviour
     {
         enemies.Remove(e.enemyScript);
         Destroy(e.enemy);
+
+        if (enemies.Count == 0 && WaveManager.getWaveInProgressFunc?.Invoke() == false)
+        {
+            EventBus<WaveFinishedEvent>.Raise(new WaveFinishedEvent());
+        }
     }
 
     public void DamageEnemy(EnemyHitEvent e)

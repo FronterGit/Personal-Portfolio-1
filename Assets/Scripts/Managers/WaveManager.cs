@@ -10,7 +10,20 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private List<Wave> waves;
     [SerializeField] private int currentWaveIndex = 0;
     [SerializeField] private int currentSubwaveIndex = 0;
-    bool waveInProgress = false;
+    public bool waveInProgress = false;
+    public static Func<bool> getWaveInProgressFunc;
+
+    private void OnEnable()
+    {
+        getWaveInProgressFunc += GetWaveInProgress;
+        EventBus<WaveFinishedEvent>.Subscribe(OnWaveFinished);
+    }
+
+    private void OnDisable()
+    {
+        getWaveInProgressFunc -= GetWaveInProgress;
+        EventBus<WaveFinishedEvent>.Unsubscribe(OnWaveFinished);
+    }
 
     private void Start()
     {
@@ -49,19 +62,29 @@ public class WaveManager : MonoBehaviour
             //If there is no next subwave but there is another wave, increment the wave index and reset the subwave index
             else if (currentWaveIndex + 1 < waves.Count)
             {
+                
                 currentWaveIndex++;
                 currentSubwaveIndex = 0;
                 
                 ResourceManager.changeResourceAction?.Invoke("waves", 1);
-                //EventBus<UpdateUIEvent>.Raise(new UpdateUIEvent("waves", currentWaveIndex + 1));
+                
+                //Set the wave in progress to false, so that the player can start another wave
+                waveInProgress = false;
             }
             else
             {
                 Debug.Log("Level complete");
             }
-            
-            //Set the wave in progress to false, so that the player can start another wave
-            waveInProgress = false;
         }
+    }
+
+    public bool GetWaveInProgress()
+    {
+        return waveInProgress;
+    }
+
+    public void OnWaveFinished(WaveFinishedEvent e)
+    {
+        ResourceManager.changeResourceAction?.Invoke("gold", waves[currentWaveIndex - 1].waveReward);
     }
 }
