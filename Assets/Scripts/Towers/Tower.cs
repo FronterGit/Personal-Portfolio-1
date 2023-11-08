@@ -4,17 +4,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public abstract class Tower : MonoBehaviour
 {
-    [Header("Tower Stats")]
-    [SerializeField] public float range = 2f;
-    [SerializeField] public int damage = 1;
-    [SerializeField] public float fireRate = 1f;
-    [SerializeField] public float bulletSpeed = 5f;
+    [Header("Tower Stats")] [SerializeField]
+    public float range;
+    [SerializeField] public int damage;
+    [FormerlySerializedAs("fireRate")] [SerializeField]
+    public float attackSpeed;
+    private float internalAttackSpeed;
+    [SerializeField] public float bulletSpeed;
     public int cost = 1;
     [SerializeField] public string towerName = "Tower";
-
+    
     [Header("Unity Setup Fields")]
     [SerializeField] public GameObject bulletPrefab;
     [SerializeField] public GameObject placePrefab;
@@ -41,9 +44,9 @@ public abstract class Tower : MonoBehaviour
     {
         //Set the range of the tower
         rangeCollider.radius = range;
-
-        //Convert fireRate to shots per second
-        fireRate = 1 / fireRate;
+        
+        //Set the internal attack speed to the attack speed
+        internalAttackSpeed = 1 / attackSpeed;
         
         //Set the range indicator to the range of the tower
         rangeIndicator.transform.localScale = new Vector3(range * 2, range * 2, 0);
@@ -71,7 +74,7 @@ public abstract class Tower : MonoBehaviour
 
             //Wait for the fireRate before shooting again
             yield return new WaitForSeconds(wait);
-            StartCoroutine(FireCooldown(fireRate));
+            StartCoroutine(FireCooldown(internalAttackSpeed));
         }
         else yield return null;
     }
@@ -136,7 +139,7 @@ public abstract class Tower : MonoBehaviour
             enemiesInRange.Add(collision.GetComponent<Enemy>());
 
             //If this is the first enemy to come into range, start shooting
-            if(enemiesInRange.Count == 1) StartCoroutine(FireCooldown(fireRate));
+            if(enemiesInRange.Count == 1) StartCoroutine(FireCooldown(internalAttackSpeed));
         }
     }
 

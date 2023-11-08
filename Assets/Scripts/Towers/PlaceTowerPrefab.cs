@@ -7,7 +7,7 @@ using UnityEngine.Serialization;
 public class PlaceTowerPrefab : MonoBehaviour
 {
     private SpriteRenderer[] spriteRenderers;
-    public bool placeable = true;
+    public bool placeable;
     
     //If we don't track all collisions with a list, the tower will become placeable on trigger exit even though there was a second collision.
     private List<Collider2D> collisions = new List<Collider2D>();
@@ -61,7 +61,6 @@ public class PlaceTowerPrefab : MonoBehaviour
             foreach (SpriteRenderer spriteRenderer in spriteRenderers)
             {
                 spriteRenderer.color = new Color(Color.red.r, Color.red.g, Color.red.b, 0.5f);
-                
             }
             placeable = false;
             

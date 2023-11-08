@@ -13,22 +13,24 @@ using UnityEngine.UI;
 public class TowerCost
 {
     public Tower tower;
-    public int cost;
     public TMP_Text costText;
     public TMP_Text towerNameText;
 }
 public class Shop : MonoBehaviour
 {
+    [Header("Variables")]
     private bool buying;
     private GameObject towerHover;
     private PlaceTowerPrefab towerToBuy;
     private List<Tower> selectedTowers = new List<Tower>();
     
+    [Header("References")]
     [SerializeField] private List<TowerCost> towersCosts;
     [SerializeField] private GameObject TowerInfoPanel;
     
     private void OnEnable()
     {
+        //Subscribe to the TowerSelectedEvent so we can select towers.
         EventBus<TowerSelectedEvent>.Subscribe(TowerSelection);
     }
 
@@ -48,8 +50,7 @@ public class Shop : MonoBehaviour
         //Set the cost of each tower and display it in the shop UI.
         foreach (TowerCost towerCost  in towersCosts)
         {
-            towerCost.tower.SetCost(towerCost.cost);
-            towerCost.costText.text = towerCost.cost.ToString();
+            towerCost.costText.text = towerCost.tower.cost.ToString();
             towerCost.towerNameText.text = towerCost.tower.name;
         }
     }
@@ -65,13 +66,14 @@ public class Shop : MonoBehaviour
         towerHover = Instantiate(placePrefab, Vector3.zero, Quaternion.identity);
         
         //Set the towerToBuy and the towerStats so we can use them later.
-        towerToBuy = placePrefab.GetComponent<PlaceTowerPrefab>();
+        towerToBuy = towerHover.GetComponent<PlaceTowerPrefab>();
         towerToBuy.towerStats = tower;
         
         //Open the towerSelectedPanel and display the tower's stats.
         TowerInfoPanel.SetActive(true);
         TowerInfoPanel.GetComponent<TowerInfoPanel>().Init(tower, false);
         
+        //Go in to buying mode.
         Buying(true);
     }
 
@@ -96,9 +98,9 @@ public class Shop : MonoBehaviour
         }
     }
     
-    private void Buying(bool set = true)
+    private void Buying(bool setTo = true)
     {
-        if (set)
+        if (setTo)
         {
             //Set the buying bool to true so we know we are currently trying to buy a tower and want to listen for mouse input.
             buying = true;
@@ -115,6 +117,17 @@ public class Shop : MonoBehaviour
         }
     }
 
+    public void SellTower()
+    {
+        //Grant the player 70% of the tower's cost and destroy the tower.
+        ResourceManager.changeResourceAction?.Invoke("gold", Mathf.RoundToInt(selectedTowers[0].GetComponent<Tower>().cost * 0.7f));
+        Destroy(selectedTowers[0].gameObject);
+        
+        //Deselect the tower and close the towerSelectedPanel.
+        selectedTowers.Clear();
+        TowerInfoPanel.SetActive(false);
+    }
+
     private void PlaceTower()
     {
         //If the tower has successfully been bought, instantiate the tower and destroy the placeTowerPrefab.
@@ -128,22 +141,27 @@ public class Shop : MonoBehaviour
     
     private void TowerSelection(TowerSelectedEvent e)
     {
-        if(e.selected) selectedTowers.Add(e.tower);
+        //If the event wants us to select a tower, clear the list and then add it to the selectedTowers list.
+        if (e.selected)
+        {
+            selectedTowers.Clear();
+            selectedTowers.Add(e.tower);
+        }
+        //Else, remove it from the list. If we don't do this, the info panel will stay open even though we have deselected the tower.
         else selectedTowers.Remove(e.tower);
 
-        if (selectedTowers.Count > 0)
+        //If we have exactly one tower selected, open the towerSelectedPanel and display the tower's stats.
+        if (selectedTowers.Count == 1)
         {
-            foreach (Tower t in selectedTowers)
-            {
-                TowerInfoPanel.SetActive(true);
-
-                if (e.bought)
-                {
-                    TowerInfoPanel.GetComponent<TowerInfoPanel>().Init(t, true);
-                }
-                else TowerInfoPanel.GetComponent<TowerInfoPanel>().Init(t, false);
+            TowerInfoPanel.SetActive(true);
+            if (e.bought)
+            { 
+                TowerInfoPanel.GetComponent<TowerInfoPanel>().Init(selectedTowers[0], true);
             }
+            else TowerInfoPanel.GetComponent<TowerInfoPanel>().Init(selectedTowers[0], false);
         }
+        else if(selectedTowers.Count > 1) Debug.LogError("More than one tower selected!");
+        //If we don't have any towers selected, close the towerSelectedPanel.
         else TowerInfoPanel.SetActive(false);
 
 

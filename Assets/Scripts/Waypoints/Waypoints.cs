@@ -10,6 +10,5 @@ public class Waypoints : MonoBehaviour
     private void Start()
     {
         EventBus<EnemyRouteEvent>.Raise(new EnemyRouteEvent(waypoints));
-        Debug.Log("Waypoints sent");
     }
 }
