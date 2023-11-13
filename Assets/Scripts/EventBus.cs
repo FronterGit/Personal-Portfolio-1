@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -101,6 +102,20 @@ namespace EventBus
         public WaveFinishedEvent()
         {
             
+        }
+    }
+
+    public class DisplayPromptEvent : Event
+    {
+        public TMPro.TMP_Text promptText;
+        public bool display;
+        public float time;
+        public DisplayPromptEvent(TMP_Text promptText = null, bool display = true, float time = 0f)
+        {
+            this.promptText = promptText;
+            this.display = display;
+            this.time = time;
+
         }
     }
 }

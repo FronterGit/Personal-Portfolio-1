@@ -27,6 +27,10 @@ public class Shop : MonoBehaviour
     [Header("References")]
     [SerializeField] private List<TowerCost> towersCosts;
     [SerializeField] private GameObject TowerInfoPanel;
+
+    [Header("Prompts")] 
+    [SerializeField] private TMP_Text buyingPrompt;
+    [SerializeField] private TMP_Text notEnoughGoldPrompt;
     
     private void OnEnable()
     {
@@ -75,12 +79,16 @@ public class Shop : MonoBehaviour
         
         //Go in to buying mode.
         Buying(true);
+        
+        //Raise display event to tell canvas to display prompt
+        EventBus<DisplayPromptEvent>.Raise(new DisplayPromptEvent(buyingPrompt));
     }
 
     private void OnTowerBuy(MouseInputEvent e)
     {
         //If the player is not buying a tower or the towerHover is null, return.
         if(!buying || towerHover == null) return;
+        
         
         //If the player clicks the left mouse button, try to place the tower.
         if (e.mouseButton == PlayerInput.MouseButton.Left)
@@ -89,12 +97,26 @@ public class Shop : MonoBehaviour
             {
                 PlaceTower();
                 Buying(false);
+                
+                //Raise display event to tell canvas to stop displaying prompt
+                EventBus<DisplayPromptEvent>.Raise(new DisplayPromptEvent(null, false));
+            }
+            else
+            {
+                Destroy(towerHover);
+                Buying(false);
+                
+                //Raise display event to tell canvas to display not enough gold prompt
+                EventBus<DisplayPromptEvent>.Raise(new DisplayPromptEvent(notEnoughGoldPrompt, true, 2f));
             }
         }
         else
         {
             Destroy(towerHover);
             Buying(false);
+            
+            //Raise display event to tell canvas to stop displaying prompt
+            EventBus<DisplayPromptEvent>.Raise(new DisplayPromptEvent(null, false));
         }
     }
     
