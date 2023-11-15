@@ -8,6 +8,7 @@ TagManager:
   - hitbox
   - ground
   - Tower
+  - water
   layers:
   - Default
   - TransparentFX

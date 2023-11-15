@@ -3529,7 +3529,7 @@ GameObject:
   - component: {fileID: 1633846215}
   m_Layer: 0
   m_Name: Water
-  m_TagString: hitbox
+  m_TagString: water
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7260,6 +7260,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2032089240, guid: 62de5f0e6cca9674f95f259d168dbf40, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 172179335733205006, guid: 62de5f0e6cca9674f95f259d168dbf40, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

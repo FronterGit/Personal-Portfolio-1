@@ -334,6 +334,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   placeable: 1
+  waterUnit: 1
+  collisions: []
   towerPrefab: {fileID: 7516184778551912310, guid: 1d3d597ae28a1b044a908b1e9560cbae, type: 3}
   towerStats: {fileID: 0}
   rangeIndicator: {fileID: 5580566532529711051}
