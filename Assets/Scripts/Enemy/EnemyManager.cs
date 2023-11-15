@@ -111,4 +111,13 @@ public class EnemyManager : MonoBehaviour {
         yield return new WaitForSeconds(delay);
         action.Invoke();
     }
+
+    public static void InvokeNextFrame(System.Action action, MonoBehaviour context) {
+        context.StartCoroutine(InvokeNextFrameCoroutine(action));
+    }
+
+    private static IEnumerator InvokeNextFrameCoroutine(System.Action action) {
+        yield return new WaitForEndOfFrame();
+        action.Invoke();
+    }
 }

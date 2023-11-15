@@ -2,6 +2,7 @@ using System;
 using EventBus;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -12,7 +13,7 @@ public abstract class Tower : MonoBehaviour {
 
     [SerializeField] public int damage;
     [SerializeField] public float attackSpeed;
-    protected float internalAttackSpeed;
+    [SerializeField] protected float internalAttackSpeed;
     [SerializeField] public float bulletSpeed;
     public int cost = 1;
     [SerializeField] public string towerName = "Tower";
@@ -30,6 +31,9 @@ public abstract class Tower : MonoBehaviour {
     private List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
     public bool selected;
 
+    private bool buffed = false;
+
+
     protected virtual void OnEnable() {
         EventBus<MouseInputEvent>.Subscribe(CheckMouseOnTower);
     }
@@ -38,12 +42,13 @@ public abstract class Tower : MonoBehaviour {
         EventBus<MouseInputEvent>.Unsubscribe(CheckMouseOnTower);
     }
 
-    private void Start() {
+    protected virtual void Start() {
         //Set the range of the tower
         rangeCollider.radius = range;
 
         //Set the internal attack speed to the attack speed
-        internalAttackSpeed = 1 / attackSpeed;
+        if (!buffed) internalAttackSpeed = 1 / attackSpeed;
+        // Debug.Log("set attack speed");
 
         //Set the range indicator to the range of the tower
         rangeIndicator.transform.localScale = new Vector3(range * 2, range * 2, 0);
@@ -153,6 +158,17 @@ public abstract class Tower : MonoBehaviour {
 
     public GameObject GetPlacePrefab() {
         return placePrefab;
+    }
+
+
+    public void SetInternalAttackSpeed(float modifier, bool alreadyBuffed = false) {
+        if (!alreadyBuffed) {
+            internalAttackSpeed = 1 / attackSpeed;
+        }
+
+        internalAttackSpeed *= modifier;
+
+        buffed = true;
     }
 
     #endregion

@@ -358,7 +358,7 @@ GameObject:
   - component: {fileID: 2513381172228873074}
   m_Layer: 0
   m_Name: SniperTower
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -443,6 +443,7 @@ MonoBehaviour:
   range: 0
   damage: 1
   attackSpeed: 1.4
+  internalAttackSpeed: 0
   bulletSpeed: 40
   cost: 1
   towerName: SniperTower

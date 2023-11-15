@@ -159,6 +159,8 @@ public class Shop : MonoBehaviour
         
         //Then close the towerSelectedPanel.
         TowerInfoPanel.SetActive(false);
+
+        EventBus<TowerPlacedEvent>.Raise(new TowerPlacedEvent());
     }
     
     private void TowerSelection(TowerSelectedEvent e)
