@@ -7,6 +7,7 @@ using Event = EventBus.Event;
 
 public class EnemyManager : MonoBehaviour
 {
+    [SerializeField] private List<Transform[]> paths;
     [SerializeField] private Transform[] waypoints;
     [SerializeField] private List<Enemy> enemies;
 
@@ -28,16 +29,20 @@ public class EnemyManager : MonoBehaviour
 
     private void SetEnemyRoute(EnemyRouteEvent e)
     {
-        this.waypoints = e.waypoints;
+        this.paths[e.path] = e.waypoints;
     }
 
     public void SpawnEnemy(EnemySpawnEvent e)
     {
-        GameObject enemy = Instantiate(e.enemy, waypoints[0].position, Quaternion.identity);
-        var enemyScript = enemy.GetComponent<Enemy>();
-        enemyScript.SetWaypoints(waypoints);
+        foreach(Transform[] path in paths)
+        {
+            GameObject enemy = Instantiate(e.enemy, waypoints[0].position, Quaternion.identity);
+            var enemyScript = enemy.GetComponent<Enemy>();
+            enemyScript.SetWaypoints(waypoints);
         
-        enemies.Add(enemyScript);
+            enemies.Add(enemyScript);
+        }
+        
     }
 
     public void RemoveEnemy(RemoveEnemyEvent e)

@@ -30,10 +30,12 @@ namespace EventBus
 
     public class EnemyRouteEvent : Event
     {
+        public int path;
         public Transform[] waypoints;
 
-        public EnemyRouteEvent(Transform[] waypoints)
+        public EnemyRouteEvent(int path, Transform[] waypoints)
         {
+            this.path = path;
             this.waypoints = waypoints;
         }
     }
