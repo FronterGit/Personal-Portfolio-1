@@ -101,6 +101,10 @@ public class Shop : MonoBehaviour
                 //Raise display event to tell canvas to stop displaying prompt
                 EventBus<DisplayPromptEvent>.Raise(new DisplayPromptEvent(null, false));
             }
+            else if(!towerToBuy.placeable)
+            {
+                //do nothing
+            }
             else
             {
                 Destroy(towerHover);
