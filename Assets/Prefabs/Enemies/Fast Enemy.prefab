@@ -98,6 +98,7 @@ MonoBehaviour:
   speed: 2
   maxHealth: 4
   goldDrop: 3
+  damage: 1
   waypoints: []
   waypointIndex: 0
   healthBar: {fileID: 1059137149458818785}
@@ -128,7 +129,7 @@ Transform:
   m_GameObject: {fileID: 206280188112356082}
   m_LocalRotation: {x: -0, y: -0.38268343, z: -0, w: 0.92387956}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 9530430136141076}
