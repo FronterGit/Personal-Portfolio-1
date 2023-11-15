@@ -43,10 +43,12 @@ namespace EventBus
     public class EnemySpawnEvent : Event
     {
         public GameObject enemy;
+        public int path;
 
-        public EnemySpawnEvent(GameObject enemy)
+        public EnemySpawnEvent(GameObject enemy, int path)
         {
             this.enemy = enemy;
+            this.path = path;
         }
     }
 

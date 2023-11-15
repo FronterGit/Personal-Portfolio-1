@@ -221,6 +221,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waypoints: []
+  pathIndex: 0
 --- !u!4 &93063783
 Transform:
   m_ObjectHideFlags: 0
@@ -4876,8 +4877,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waves:
   - {fileID: 5928658722464366123, guid: e159efee18fd102488ca2cb7e5b11e9e, type: 3}
-  - {fileID: 5928658722464366123, guid: 13ebb4d305eca604bb1ed883b4878fe9, type: 3}
-  - {fileID: 5928658722464366123, guid: 24b6ba3b92bd6924bb1c1e3c86f46378, type: 3}
   currentWaveIndex: 0
   currentSubwaveIndex: 0
   waveInProgress: 0

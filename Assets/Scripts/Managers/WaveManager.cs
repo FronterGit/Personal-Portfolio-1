@@ -33,36 +33,46 @@ public class WaveManager : MonoBehaviour
     //Method called by the start wave button in the UI
     public void StartWave()
     {
-        if(!waveInProgress) StartCoroutine(SpawnWave());
+        //If there is no wave in progress, start the wave
+        if (!waveInProgress)
+        {
+            //We must start a coroutine for each separate path.
+            int p = 0;
+            foreach (Path path in waves[currentWaveIndex].paths)
+            {
+                StartCoroutine(SpawnWave(p));
+                p++;
+            }
+        }
     }
 
-    private IEnumerator SpawnWave()
+    private IEnumerator SpawnWave(int p)
     {
         //Set the wave in progress to true, so that the player can't start another wave while one is in progress
         waveInProgress = true;
         
         //For each subwave in the current wave...
-        for (int i = 0; i < waves[currentWaveIndex].subwaves.Count; i++)
+        for (int i = 0; i < waves[currentWaveIndex].paths[p].subwaves.Count; i++)
         {
             //spawn an enemy...
-            for (int spawn = 0; spawn < waves[currentWaveIndex].subwaves[currentSubwaveIndex].GetAmountToSpawn(); spawn++)
+            for (int spawn = 0; spawn < waves[currentWaveIndex].paths[p].subwaves[currentSubwaveIndex].GetAmountToSpawn(); spawn++)
             {
-                GameObject enemy = waves[currentWaveIndex].subwaves[currentSubwaveIndex].GetEnemyPrefab();
-                EventBus<EnemySpawnEvent>.Raise(new EnemySpawnEvent(enemy));
+                GameObject enemy = waves[currentWaveIndex].paths[p].subwaves[currentSubwaveIndex].GetEnemyPrefab();
+                EventBus<EnemySpawnEvent>.Raise(new EnemySpawnEvent(enemy, p));
 
                 //and wait for the time between spawns before spawning the next enemy
-                yield return new WaitForSeconds(waves[currentWaveIndex].subwaves[currentSubwaveIndex].GetTimeBetweenSpawns());
+                yield return new WaitForSeconds(waves[currentWaveIndex].paths[p].subwaves[currentSubwaveIndex].GetTimeBetweenSpawns());
             }
+            
             //Then wait for the time between subwaves before spawning the next subwave
-            yield return new WaitForSeconds(waves[currentWaveIndex].subwaves[currentSubwaveIndex].GetTimeBetweenSubwaves());
-
+            yield return new WaitForSeconds(waves[currentWaveIndex].paths[p].subwaves[currentSubwaveIndex].GetTimeBetweenSubwaves());
+            
             //If there is another subwave in the current wave, increment the subwave index
-            if (currentSubwaveIndex + 1 < waves[currentWaveIndex].subwaves.Count) currentSubwaveIndex++;
+            if (currentSubwaveIndex + 1 < waves[currentWaveIndex].paths[p].subwaves.Count) currentSubwaveIndex++;
 
             //If there is no next subwave but there is another wave, increment the wave index and reset the subwave index
             else if (currentWaveIndex + 1 < waves.Count)
             {
-                
                 currentWaveIndex++;
                 currentSubwaveIndex = 0;
                 
@@ -72,7 +82,7 @@ public class WaveManager : MonoBehaviour
                 waveInProgress = false;
             }
             else
-            {
+            { 
                 Debug.Log("Level complete");
             }
         }

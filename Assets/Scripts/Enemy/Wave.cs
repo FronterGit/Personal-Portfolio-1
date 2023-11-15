@@ -5,8 +5,14 @@ using UnityEngine;
 
 public class Wave : MonoBehaviour
 {
-    [SerializeField] public List<Subwave> subwaves;
+    [SerializeField] public List<Path> paths;
     public int waveReward;
+}
+
+[System.Serializable]
+public class Path
+{
+    [SerializeField] public List<Subwave> subwaves;
 }
 
 [System.Serializable]
