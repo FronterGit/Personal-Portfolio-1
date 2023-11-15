@@ -12,7 +12,7 @@ public abstract class Tower : MonoBehaviour {
 
     [SerializeField] public int damage;
     [SerializeField] public float attackSpeed;
-    private float internalAttackSpeed;
+    protected float internalAttackSpeed;
     [SerializeField] public float bulletSpeed;
     public int cost = 1;
     [SerializeField] public string towerName = "Tower";
@@ -30,11 +30,11 @@ public abstract class Tower : MonoBehaviour {
     private List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
     public bool selected;
 
-    private void OnEnable() {
+    protected virtual void OnEnable() {
         EventBus<MouseInputEvent>.Subscribe(CheckMouseOnTower);
     }
 
-    private void OnDisable() {
+    protected virtual void OnDisable() {
         EventBus<MouseInputEvent>.Unsubscribe(CheckMouseOnTower);
     }
 
@@ -55,7 +55,7 @@ public abstract class Tower : MonoBehaviour {
         }
     }
 
-    private IEnumerator FireCooldown(float wait) {
+    protected virtual IEnumerator FireCooldown(float wait) {
         //If there are enemies in range...
         if (enemiesInRange.Count > 0) {
             //...set the target to the first enemy in range,
