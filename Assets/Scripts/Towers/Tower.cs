@@ -70,9 +70,6 @@ public abstract class Tower : MonoBehaviour {
                 Attack();
             }
 
-            toRemoveAtEndOfFrame.ForEach(e => enemiesInRange.Remove(e));
-            toRemoveAtEndOfFrame.Clear();
-
             //Wait for the fireRate before shooting again
             yield return new WaitForSeconds(wait);
             StartCoroutine(FireCooldown(internalAttackSpeed));
@@ -138,19 +135,18 @@ public abstract class Tower : MonoBehaviour {
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision) {
+    protected virtual void OnTriggerExit2D(Collider2D collision) {
         //If an enemy leaves the tower's range, remove it from the list of enemies in range
         if (collision.CompareTag("Enemy")) {
-            // enemiesInRange.Remove(collision.GetComponent<Enemy>());
+            enemiesInRange.Remove(collision.GetComponent<Enemy>());
 
-            toRemoveAtEndOfFrame.Add(collision.GetComponent<Enemy>());
 
             //If there are no more enemies in range, stop shooting
             if (enemiesInRange.Count == 0) StopAllCoroutines();
         }
     }
 
-    private List<Enemy> toRemoveAtEndOfFrame = new();
+    protected List<Enemy> toRemoveAtEndOfFrame = new();
 
     #endregion
 
