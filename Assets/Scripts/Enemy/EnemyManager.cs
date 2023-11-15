@@ -3,6 +3,7 @@ using EventBus;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using Event = EventBus.Event;
 
@@ -15,26 +16,26 @@ public class EnemyManager : MonoBehaviour {
     public static Func<EnemyManager> GetInstanceFunc;
     public static Func<List<Enemy>> getEnemiesFunc;
 
+    public event Action onFirstEnemySpawned;
+
     private void OnEnable() {
+        GetInstanceFunc += () => this;
         getEnemiesFunc += getEnemies;
 
         EventBus<EnemyRouteEvent>.Subscribe(SetEnemyRoute);
         EventBus<EnemySpawnEvent>.Subscribe(SpawnEnemy);
         EventBus<RemoveEnemyEvent>.Subscribe(RemoveEnemy);
         //EventBus<EnemyHitEvent>.Subscribe(DamageEnemy);
-        
-        GetInstanceFunc += () => this;
     }
 
     private void OnDisable() {
+        GetInstanceFunc -= () => this;
         getEnemiesFunc -= getEnemies;
 
         EventBus<EnemyRouteEvent>.Unsubscribe(SetEnemyRoute);
         EventBus<EnemySpawnEvent>.Unsubscribe(SpawnEnemy);
         EventBus<RemoveEnemyEvent>.Unsubscribe(RemoveEnemy);
         //EventBus<EnemyHitEvent>.Unsubscribe(DamageEnemy);
-        
-        GetInstanceFunc -= () => this;
     }
 
     private List<Enemy> getEnemies() {
@@ -52,18 +53,14 @@ public class EnemyManager : MonoBehaviour {
         else paths.Add(e.waypoints);
     }
 
-    public void SpawnEnemy(EnemySpawnEvent e)
-    {
+    public void SpawnEnemy(EnemySpawnEvent e) {
         GameObject enemy;
         Enemy enemyScript;
 
-        if (e.spawnPos == Vector3.zero)
-        {
+        if (e.spawnPos == Vector3.zero) {
             //Instantiate the enemy at the first waypoint of the path that the event tells us.
             enemy = Instantiate(e.enemy, paths[e.path][0].position, Quaternion.identity);
-        }
-        else
-        {
+        } else {
             //Instantiate the enemy at the given spawn position that the event tells us.
             enemy = Instantiate(e.enemy, e.spawnPos, Quaternion.identity);
             enemy.GetComponent<Enemy>().SetWaypointIndex(e.waypointIndex);
@@ -74,8 +71,13 @@ public class EnemyManager : MonoBehaviour {
         enemyScript.SetWaypoints(paths[e.path]);
         enemyScript.SetPath(e.path);
 
+
         //Add the enemy to the list of enemies.
         enemies.Add(enemyScript);
+
+        if (enemies.Count == 1) {
+            onFirstEnemySpawned?.Invoke();
+        }
     }
 
     public void RemoveEnemy(RemoveEnemyEvent e) {
@@ -95,16 +97,13 @@ public class EnemyManager : MonoBehaviour {
     //     }
     // }
 
-    public static void DelayedForLoop(int iterations, float delay, Action action, MonoBehaviour context)
-    {
-        for (int i = 0; i < iterations; i++)
-        {
+    public static void DelayedForLoop(int iterations, float delay, Action action, MonoBehaviour context) {
+        for (int i = 0; i < iterations; i++) {
             InvokeDelayed(() => { action.Invoke(); }, delay * i, context);
         }
     }
 
-    public static void InvokeDelayed(System.Action action, float delay, MonoBehaviour context)
-    {
+    public static void InvokeDelayed(System.Action action, float delay, MonoBehaviour context) {
         context.StartCoroutine(InvokeDelayedCoroutine(action, delay));
     }
 

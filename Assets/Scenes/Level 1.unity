@@ -394,7 +394,7 @@ MonoBehaviour:
         m_MethodName: BuyTower
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 5148339333548425563, guid: 43b17abecc104344fa98ff68d03bae9b, type: 3}
+          m_ObjectArgument: {fileID: 2513381172228873074, guid: 5dcaab3cd7a47ae46b18d3ec31f3ade1, type: 3}
           m_ObjectArgumentAssemblyTypeName: Tower, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -627,7 +627,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 319692802}
   - {fileID: 2030368061}
   - {fileID: 537672330}
   m_Father: {fileID: 1913731961}
@@ -831,7 +830,7 @@ RectTransform:
   m_Children:
   - {fileID: 578136212}
   m_Father: {fileID: 472921028}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -6327,7 +6326,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 472921028}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

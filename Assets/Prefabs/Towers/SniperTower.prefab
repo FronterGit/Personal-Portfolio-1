@@ -441,9 +441,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 0
-  damage: 7
+  damage: 1
   attackSpeed: 1.4
-  bulletSpeed: 20
+  bulletSpeed: 40
   cost: 1
   towerName: SniperTower
   bulletPrefab: {fileID: 5557141635670938561, guid: 47eb76f9f68f63241b1214568480a676, type: 3}
