@@ -8,16 +8,18 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private float speed = 4f;
-    [FormerlySerializedAs("health")] [SerializeField] private float maxHealth = 5;
-    private float health;
+    [SerializeField] protected float speed = 4f;
+    [SerializeField] protected float maxHealth = 5;
+    protected float health;
     [SerializeField] private int goldDrop = 1;
+    [SerializeField] protected int damage = 1;
+    protected int path;
 
     [SerializeField] private Transform[] waypoints;
-    [SerializeField] private int waypointIndex = 0;
+    [SerializeField] protected int waypointIndex = 0;
     [SerializeField] Image healthBar;
 
-    private void Start()
+    protected virtual void Start()
     {
         health = maxHealth;
         transform.position = new Vector3(waypoints[waypointIndex].position.x, waypoints[waypointIndex].position.y, 0);
@@ -32,6 +34,16 @@ public class Enemy : MonoBehaviour
     public void SetWaypoints(Transform[] waypoints)
     {
         this.waypoints = waypoints;
+    }
+    
+    public void SetPath(int path)
+    {
+        this.path = path;
+    }
+    
+    public void SetWaypointIndex(int waypointIndex)
+    {
+        this.waypointIndex = waypointIndex;
     }
 
     private void Move()
@@ -51,7 +63,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         health -= damage;
         if(health <= 0)
@@ -65,7 +77,7 @@ public class Enemy : MonoBehaviour
     protected virtual void Death(bool reachedEnd)
     {
         if (!reachedEnd) ResourceManager.changeResourceAction?.Invoke("gold", goldDrop);
-        else ResourceManager.changeResourceAction?.Invoke("lives", -1);
+        else ResourceManager.changeResourceAction?.Invoke("lives", damage);
         
         EventBus<RemoveEnemyEvent>.Raise(new RemoveEnemyEvent(gameObject));
     }

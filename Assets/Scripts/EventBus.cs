@@ -44,11 +44,15 @@ namespace EventBus
     {
         public GameObject enemy;
         public int path;
+        public Vector3 spawnPos;
+        public int waypointIndex;
 
-        public EnemySpawnEvent(GameObject enemy, int path)
+        public EnemySpawnEvent(GameObject enemy, int path, Vector3 spawnPos = new Vector3(), int waypointIndex = 0)
         {
             this.enemy = enemy;
             this.path = path;
+            this.spawnPos = spawnPos;
+            this.waypointIndex = waypointIndex;
         }
     }
 
@@ -64,17 +68,17 @@ namespace EventBus
         }
     }
 
-    public class EnemyHitEvent : Event
-    {
-        public int damage;
-        public Enemy enemy;
-
-        public EnemyHitEvent(int damage, Enemy enemy)
-        {
-            this.damage = damage;
-            this.enemy = enemy;
-        }
-    }
+    // public class EnemyHitEvent : Event
+    // {
+    //     public int damage;
+    //     public Enemy enemy;
+    //
+    //     public EnemyHitEvent(int damage, Enemy enemy)
+    //     {
+    //         this.damage = damage;
+    //         this.enemy = enemy;
+    //     }
+    // }
 
     public class MouseInputEvent : Event
     {
