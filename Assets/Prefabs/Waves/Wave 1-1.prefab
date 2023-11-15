@@ -46,8 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paths:
   - subwaves:
-    - enemyPrefab: {fileID: 9530430136141074, guid: bb943eddf619aab42bb95a0809ce04ab, type: 3}
-      amountToSpawn: 1
+    - enemyPrefab: {fileID: 9530430136141074, guid: ba940d2496d74ec4aada6728adc406cc, type: 3}
+      amountToSpawn: 10
       timeBetweenSpawns: 1
       timeBetweenSubwaves: 0
   waveReward: 10
