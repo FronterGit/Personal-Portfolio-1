@@ -416,7 +416,7 @@ MonoBehaviour:
   attackSpeed: 2.5
   internalAttackSpeed: 0
   bulletSpeed: 5
-  cost: 20
+  cost: 25
   towerName: Arrow Tower
   bulletPrefab: {fileID: 5557141635670938561, guid: 47eb76f9f68f63241b1214568480a676, type: 3}
   placePrefab: {fileID: 7516184778551912310, guid: 40a43b4f338c6f84ba9deb606a5077cf, type: 3}

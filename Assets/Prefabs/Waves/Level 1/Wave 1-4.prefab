@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7254921476844966364}
   - component: {fileID: 5928658722464366123}
   m_Layer: 0
-  m_Name: Wave 1-3
+  m_Name: Wave 1-4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,16 +46,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   paths:
   - subwaves:
-    - enemyPrefab: {fileID: 9530430136141074, guid: ba940d2496d74ec4aada6728adc406cc, type: 3}
-      amountToSpawn: 10
+    - enemyPrefab: {fileID: 9530430136141074, guid: bb943eddf619aab42bb95a0809ce04ab, type: 3}
+      amountToSpawn: 1
+      timeBetweenSpawns: 0
+      timeBetweenSubwaves: 2
+    - enemyPrefab: {fileID: 9530430136141074, guid: 18f835696d2077647bc13f3570084b82, type: 3}
+      amountToSpawn: 4
       timeBetweenSpawns: 0.5
-      timeBetweenSubwaves: 3
-    - enemyPrefab: {fileID: 9530430136141074, guid: ba940d2496d74ec4aada6728adc406cc, type: 3}
-      amountToSpawn: 10
-      timeBetweenSpawns: 0.5
-      timeBetweenSubwaves: 3
-    - enemyPrefab: {fileID: 9530430136141074, guid: ba940d2496d74ec4aada6728adc406cc, type: 3}
-      amountToSpawn: 10
-      timeBetweenSpawns: 0.5
-      timeBetweenSubwaves: 3
-  waveReward: 5
+      timeBetweenSubwaves: 0
+  waveReward: 10

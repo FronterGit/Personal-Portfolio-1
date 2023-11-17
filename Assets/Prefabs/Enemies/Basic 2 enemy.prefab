@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7772369616422885930}
   - component: {fileID: -3239691619806383403}
   m_Layer: 0
-  m_Name: Basic Enemy
+  m_Name: Basic 2 enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  maxHealth: 5
+  maxHealth: 15
   goldDrop: 3
   damage: 1
   waypoints: []
@@ -216,7 +216,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.245}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &8400915563328779742
@@ -430,7 +430,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -4082225, guid: fb7be28f2a9154048976ff2d8c16b3aa, type: 3}
+  m_Sprite: {fileID: 1888547900, guid: 1a00ee754c83cc949b81f008a1f996ec, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -451,7 +451,7 @@ Animator:
   m_GameObject: {fileID: 8852011759060871148}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: b24853670c10cb84699641cc5529b525, type: 2}
+  m_Controller: {fileID: 9100000, guid: 1a9f71a8a8489b84eb09181b85590d27, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

@@ -5,29 +5,27 @@ using UnityEngine;
 
 public class MageTower : Tower {
     public override void SetTarget(List<Enemy> enemies) {
-        target = enemies[0].transform;
+        //target = enemies[0].transform;
     }
 
     public override void Attack() {
-        List<Enemy> attacked = new();
-        for (var i = enemiesInRange.Count - 1; i >= 0; i--) {
-            // Debug.Log("i: " + i + ", count: " + enemiesInRange.Count + ", frame: " + Time.frameCount);
-            if (!attacked.Contains(enemiesInRange[i])) {
-                attacked.Add(enemiesInRange[i]);
-                enemiesInRange[i].TakeDamage(damage);
-            }
+        // List<Enemy> attacked = new();
+        // for (var i = enemiesInRange.Count - 1; i >= 0; i--) {
+        //     // Debug.Log("i: " + i + ", count: " + enemiesInRange.Count + ", frame: " + Time.frameCount);
+        //     if (!attacked.Contains(enemiesInRange[i])) {
+        //         attacked.Add(enemiesInRange[i]);
+        //         enemiesInRange[i].TakeDamage(damage);
+        //     }
+        // }
+        foreach(Enemy e in enemiesInRange) {
+            if(e != null) e.TakeDamage(damage);
         }
     }
 
     protected override IEnumerator FireCooldown(float wait) {
         //If there are enemies in range...
         if (enemiesInRange.Count > 0) {
-            //...set the target to the first enemy in range,
-            SetTarget(enemiesInRange);
-
-            if (target != null) {
-                Attack();
-            }
+            Attack();
 
             toRemoveAtEndOfFrame.ForEach(e => enemiesInRange.Remove(e));
             toRemoveAtEndOfFrame.Clear();

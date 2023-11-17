@@ -440,12 +440,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aac91a201a39c6c4eba38ac050997146, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 5
-  damage: 2
+  range: 6
+  damage: 1
   attackSpeed: 1
   internalAttackSpeed: 0
   bulletSpeed: 0
-  cost: 8
+  cost: 35
   towerName: Mage Tower
   bulletPrefab: {fileID: 0}
   placePrefab: {fileID: 7516184778551912310, guid: 9363e12aeb4ce1b4fa2c3175b1d4d5c6, type: 3}
