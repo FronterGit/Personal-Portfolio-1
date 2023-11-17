@@ -33,6 +33,7 @@ public class WaveManager : MonoBehaviour
     //Method called by the start wave button in the UI
     public void StartWave()
     {
+        Debug.Log("Starting wave");
         //If there is no wave in progress, start the wave
         if (!waveInProgress)
         {
@@ -64,22 +65,26 @@ public class WaveManager : MonoBehaviour
                 yield return new WaitForSeconds(waves[currentWaveIndex].paths[p].subwaves[currentSubwaveIndex].GetTimeBetweenSpawns());
             }
             
-            //Then wait for the time between subwaves before spawning the next subwave
-            yield return new WaitForSeconds(waves[currentWaveIndex].paths[p].subwaves[currentSubwaveIndex].GetTimeBetweenSubwaves());
-            
-            //If there is another subwave in the current wave, increment the subwave index
-            if (currentSubwaveIndex + 1 < waves[currentWaveIndex].paths[p].subwaves.Count) currentSubwaveIndex++;
+            //If there is another subwave in the current wave
+            if (currentSubwaveIndex + 1 < waves[currentWaveIndex].paths[p].subwaves.Count)
+            {
+                //Wait for the time between subwaves
+                yield return new WaitForSeconds(waves[currentWaveIndex].paths[p].subwaves[currentSubwaveIndex].GetTimeBetweenSubwaves());
+
+                //Then increment the subwave index.
+                currentSubwaveIndex++;
+            }
 
             //If there is no next subwave but there is another wave, increment the wave index and reset the subwave index
             else if (currentWaveIndex + 1 < waves.Count)
             {
                 currentWaveIndex++;
                 currentSubwaveIndex = 0;
-                
-                ResourceManager.changeResourceAction?.Invoke("waves", 1);
-                
-                //Set the wave in progress to false, so that the player can start another wave
+                        
+                //Set the wave in progress to false, so that the player can start another wave when all enemies are dead.
                 waveInProgress = false;
+                
+                break;
             }
             else
             { 
@@ -90,11 +95,13 @@ public class WaveManager : MonoBehaviour
 
     public bool GetWaveInProgress()
     {
+        Debug.Log("Wave in progress: " + waveInProgress);
         return waveInProgress;
     }
 
     public void OnWaveFinished(WaveFinishedEvent e)
     {
         ResourceManager.changeResourceAction?.Invoke("gold", waves[currentWaveIndex - 1].waveReward);
+        ResourceManager.changeResourceAction?.Invoke("waves", 1);
     }
 }

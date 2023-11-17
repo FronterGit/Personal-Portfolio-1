@@ -77,7 +77,7 @@ public class Enemy : MonoBehaviour
     protected virtual void Death(bool reachedEnd)
     {
         if (!reachedEnd) ResourceManager.changeResourceAction?.Invoke("gold", goldDrop);
-        else ResourceManager.changeResourceAction?.Invoke("lives", damage);
+        else ResourceManager.changeResourceAction?.Invoke("lives", -damage);
         
         EventBus<RemoveEnemyEvent>.Raise(new RemoveEnemyEvent(gameObject));
     }

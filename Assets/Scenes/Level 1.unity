@@ -5108,7 +5108,7 @@ MonoBehaviour:
     value: 20
     text: {fileID: 814883277}
   - name: lives
-    value: 25
+    value: 15
     text: {fileID: 2047597207}
   - name: waves
     value: 1
@@ -5417,6 +5417,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waves:
   - {fileID: 5928658722464366123, guid: e159efee18fd102488ca2cb7e5b11e9e, type: 3}
+  - {fileID: 5928658722464366123, guid: 80c90a7a551bd774cb7f6547e33bb1c1, type: 3}
+  - {fileID: 5928658722464366123, guid: 95123b7ea0f8a734e9045c70b780e3c5, type: 3}
+  - {fileID: 5928658722464366123, guid: 75c5a1b5424def642880e4a25f1ea2e2, type: 3}
   currentWaveIndex: 0
   currentSubwaveIndex: 0
   waveInProgress: 0
@@ -5858,11 +5861,11 @@ PrefabInstance:
     - target: {fileID: 172179336979714496, guid: 62de5f0e6cca9674f95f259d168dbf40, type: 3}
       propertyPath: towersCosts.Array.data[1].costText
       value: 
-      objectReference: {fileID: 1697581918}
+      objectReference: {fileID: 395132526}
     - target: {fileID: 172179336979714496, guid: 62de5f0e6cca9674f95f259d168dbf40, type: 3}
       propertyPath: towersCosts.Array.data[1].towerNameText
       value: 
-      objectReference: {fileID: 1697581917}
+      objectReference: {fileID: 1610237651}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 62de5f0e6cca9674f95f259d168dbf40, type: 3}
 --- !u!114 &1697581916 stripped
@@ -5874,28 +5877,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba4ce24b4d3f0344db885195be5ef761, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1697581917 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 172179336654984500, guid: 62de5f0e6cca9674f95f259d168dbf40, type: 3}
-  m_PrefabInstance: {fileID: 1697581915}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1697581918 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 172179336309775224, guid: 62de5f0e6cca9674f95f259d168dbf40, type: 3}
-  m_PrefabInstance: {fileID: 1697581915}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1697581919 stripped
