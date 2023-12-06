@@ -104,7 +104,7 @@ SpriteRenderer:
   m_SortingLayerID: 331014777
   m_SortingLayer: 1
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: 9ad61bf8afab4384393f1370040e5bf3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 138aba09416bb9048a1a4bee73c853e7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.39215687}
   m_FlipX: 0
   m_FlipY: 0
@@ -188,7 +188,7 @@ SpriteRenderer:
   m_SortingLayerID: 331014777
   m_SortingLayer: 1
   m_SortingOrder: 9
-  m_Sprite: {fileID: 21300000, guid: 97eaa9fb8c28f834d991c891e5306c5b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 498a5b1a4c1cc5c498965b55be2d1003, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.39215687}
   m_FlipX: 0
   m_FlipY: 0
@@ -334,6 +334,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   placeable: 1
+  waterUnit: 0
+  collisions: []
   towerPrefab: {fileID: 7516184778551912310, guid: 12abc43298a4c4c42922da46e071cf7a, type: 3}
   towerStats: {fileID: 0}
   rangeIndicator: {fileID: 5580566532529711051}

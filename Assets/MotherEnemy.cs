@@ -18,7 +18,8 @@ public class MotherEnemy : Enemy
         var w = waypointIndex;
         if (!reachedEnd)
         {
-            EnemyManager.DelayedForLoop(spawnCount, spawnDelay,
+            EventBus<EnemySpawnEvent>.Raise(new EnemySpawnEvent(m, p, t, w));
+            EnemyManager.DelayedForLoop(spawnCount - 1, spawnDelay,
                 () =>
                 {
                     EventBus<EnemySpawnEvent>.Raise(new EnemySpawnEvent(m, p, t, w));

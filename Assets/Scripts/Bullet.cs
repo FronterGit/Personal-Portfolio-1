@@ -47,6 +47,5 @@ public class Bullet : MonoBehaviour
     protected virtual void OnHitEnemy(Enemy enemy)
     { 
         enemy.TakeDamage(damage);
-        //EventBus<EnemyHitEvent>.Raise(new EnemyHitEvent(damage, target.GetComponent<Enemy>()));
     }
 }
