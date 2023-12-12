@@ -50,4 +50,4 @@ MonoBehaviour:
       amountToSpawn: 3
       timeBetweenSpawns: 1
       timeBetweenSubwaves: 0
-  waveReward: 11
+  waveReward: 14

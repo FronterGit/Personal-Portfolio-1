@@ -413,7 +413,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   range: 5
   damage: 1
-  attackSpeed: 2
+  attackSpeed: 2.1
   internalAttackSpeed: 0
   bulletSpeed: 5
   cost: 25

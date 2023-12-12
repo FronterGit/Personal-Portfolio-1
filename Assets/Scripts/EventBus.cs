@@ -108,4 +108,12 @@ namespace EventBus {
             this.time = time;
         }
     }
+    
+    public class LevelCompleteEvent : Event {
+        public bool win;
+
+        public LevelCompleteEvent(bool win) {
+            this.win = win;
+        }
+    }
 }

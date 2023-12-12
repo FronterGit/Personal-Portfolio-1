@@ -11,6 +11,7 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private int currentWaveIndex = 0;
     [SerializeField] private int currentSubwaveIndex = 0;
     public bool waveInProgress = false;
+    private bool canStartWave = true;
     public static Func<bool> getWaveInProgressFunc;
 
     private void OnEnable()
@@ -35,7 +36,7 @@ public class WaveManager : MonoBehaviour
     {
         Debug.Log("Starting wave");
         //If there is no wave in progress, start the wave
-        if (!waveInProgress)
+        if (!waveInProgress && canStartWave)
         {
             //We must start a coroutine for each separate path.
             int p = 0;
@@ -51,6 +52,7 @@ public class WaveManager : MonoBehaviour
     {
         //Set the wave in progress to true, so that the player can't start another wave while one is in progress
         waveInProgress = true;
+        canStartWave = false;
         
         //For each subwave in the current wave...
         for (int i = 0; i < waves[currentWaveIndex].paths[p].subwaves.Count; i++)
@@ -89,6 +91,7 @@ public class WaveManager : MonoBehaviour
             else
             { 
                 Debug.Log("Level complete");
+                EventBus<LevelCompleteEvent>.Raise(new LevelCompleteEvent(true));
             }
         }
     }
@@ -103,5 +106,6 @@ public class WaveManager : MonoBehaviour
     {
         ResourceManager.changeResourceAction?.Invoke("gold", waves[currentWaveIndex - 1].waveReward);
         ResourceManager.changeResourceAction?.Invoke("waves", 1);
+        canStartWave = true;
     }
 }

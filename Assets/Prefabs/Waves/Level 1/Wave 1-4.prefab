@@ -49,9 +49,9 @@ MonoBehaviour:
     - enemyPrefab: {fileID: 9530430136141074, guid: bb943eddf619aab42bb95a0809ce04ab, type: 3}
       amountToSpawn: 1
       timeBetweenSpawns: 0
-      timeBetweenSubwaves: 2
+      timeBetweenSubwaves: 1
     - enemyPrefab: {fileID: 9530430136141074, guid: 18f835696d2077647bc13f3570084b82, type: 3}
-      amountToSpawn: 4
+      amountToSpawn: 2
       timeBetweenSpawns: 0.5
       timeBetweenSubwaves: 0
   waveReward: 10

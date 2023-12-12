@@ -96,14 +96,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.8
-  maxHealth: 20
+  maxHealth: 25
   goldDrop: 5
   damage: 5
   waypoints: []
   waypointIndex: 0
   healthBar: {fileID: 1059137149458818785}
   minion: {fileID: 9530430136141074, guid: 3de2c2ca9af9323488505330f999922f, type: 3}
-  spawnCount: 10
+  spawnCount: 12
   spawnDelay: 0.1
 --- !u!1 &903506657759624113
 GameObject:

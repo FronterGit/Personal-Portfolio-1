@@ -45,4 +45,13 @@ public class PlayerInput : MonoBehaviour
         }
 
     }
+
+    private void Update()
+    {
+        //Cheats
+        if (Keyboard.current[Key.W].wasPressedThisFrame)
+        {
+            EventBus<LevelCompleteEvent>.Raise(new LevelCompleteEvent(true));
+        }
+    }
 }
