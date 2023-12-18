@@ -357,7 +357,7 @@ GameObject:
   - component: {fileID: 8360424791211320550}
   - component: {fileID: -5558148727873826735}
   m_Layer: 0
-  m_Name: MageTower
+  m_Name: Mage Tower
   m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

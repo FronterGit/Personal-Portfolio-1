@@ -24,6 +24,12 @@ public class WaveManager : MonoBehaviour
     {
         getWaveInProgressFunc -= GetWaveInProgress;
         EventBus<WaveFinishedEvent>.Unsubscribe(OnWaveFinished);
+        
+        //Unity sucks and doesn't reset the current subwave index when exiting play mode, so we have to do it ourselves
+        foreach(Wave w in waves)
+        {
+            w.OnExitPlayMode();
+        }
     }
 
     private void Start()
@@ -42,70 +48,102 @@ public class WaveManager : MonoBehaviour
             int p = 0;
             foreach (Path path in waves[currentWaveIndex].paths)
             {
-                StartCoroutine(SpawnWave(p));
-                p++;
+                //If we have reached the last path, start the wave as normal
+                if (p == waves[currentWaveIndex].paths.Count - 1)
+                {
+                    StartCoroutine(SpawnWave(p));
+                }
+                //Else, start the wave but don't increment the wave index because another path will be spawned
+                else
+                {
+                    StartCoroutine(SpawnWave(p, false));
+                    p++;
+                }
             }
         }
     }
 
-    private IEnumerator SpawnWave(int p)
+    private IEnumerator SpawnWave(int p, bool incrementWave = true)
     {
         //Set the wave in progress to true, so that the player can't start another wave while one is in progress
         waveInProgress = true;
         canStartWave = false;
         
+
+        
         //For each subwave in the current wave...
         for (int i = 0; i < waves[currentWaveIndex].paths[p].subwaves.Count; i++)
         {
+            int wave = currentWaveIndex;
+            int subwave = waves[currentWaveIndex].paths[p].currentSubwaveIndex;
+            
             //spawn an enemy...
-            for (int spawn = 0; spawn < waves[currentWaveIndex].paths[p].subwaves[currentSubwaveIndex].GetAmountToSpawn(); spawn++)
+            for (int spawn = 0; spawn < waves[wave].paths[p].subwaves[subwave].GetAmountToSpawn(); spawn++)
             {
-                GameObject enemy = waves[currentWaveIndex].paths[p].subwaves[currentSubwaveIndex].GetEnemyPrefab();
+                GameObject enemy = waves[wave].paths[p].subwaves[subwave].GetEnemyPrefab();
                 EventBus<EnemySpawnEvent>.Raise(new EnemySpawnEvent(enemy, p));
 
                 //and wait for the time between spawns before spawning the next enemy
-                yield return new WaitForSeconds(waves[currentWaveIndex].paths[p].subwaves[currentSubwaveIndex].GetTimeBetweenSpawns());
+                yield return new WaitForSeconds(waves[wave].paths[p].subwaves[subwave].GetTimeBetweenSpawns());
             }
             
             //If there is another subwave in the current wave
-            if (currentSubwaveIndex + 1 < waves[currentWaveIndex].paths[p].subwaves.Count)
+            if (subwave + 1 < waves[wave].paths[p].subwaves.Count)
             {
                 //Wait for the time between subwaves
-                yield return new WaitForSeconds(waves[currentWaveIndex].paths[p].subwaves[currentSubwaveIndex].GetTimeBetweenSubwaves());
+                yield return new WaitForSeconds(waves[wave].paths[p].subwaves[subwave].GetTimeBetweenSubwaves());
 
+                //Check again if there is another subwave, because the player may have started another wave while we were waiting
                 //Then increment the subwave index.
-                currentSubwaveIndex++;
+                if (currentSubwaveIndex + 1 < waves[wave].paths[p].subwaves.Count)
+                {
+                    waves[currentWaveIndex].paths[p].currentSubwaveIndex++;
+                }
             }
-
             //If there is no next subwave but there is another wave, increment the wave index and reset the subwave index
-            else if (currentWaveIndex + 1 < waves.Count)
+            else if (wave + 1 < waves.Count && incrementWave)
             {
-                currentWaveIndex++;
-                currentSubwaveIndex = 0;
-                        
-                //Set the wave in progress to false, so that the player can start another wave when all enemies are dead.
                 waveInProgress = false;
-                
-                break;
             }
+            //Else, the level is complete and we don't need to do anything
             else
-            { 
+            {
+                waveInProgress = false;
                 Debug.Log("Level complete");
-                EventBus<LevelCompleteEvent>.Raise(new LevelCompleteEvent(true));
             }
+            
+
         }
     }
 
     public bool GetWaveInProgress()
     {
-        Debug.Log("Wave in progress: " + waveInProgress);
         return waveInProgress;
     }
 
     public void OnWaveFinished(WaveFinishedEvent e)
     {
-        ResourceManager.changeResourceAction?.Invoke("gold", waves[currentWaveIndex - 1].waveReward);
-        ResourceManager.changeResourceAction?.Invoke("waves", 1);
+        //If there is another wave, increment the wave index and reset the subwave index
+        if(ResourceManager.getResourceValueFunc?.Invoke("totalWaves") >= ResourceManager.getResourceValueFunc?.Invoke("waves") + 1)
+        {
+            currentWaveIndex++;
+            
+            foreach(Path p in waves[currentWaveIndex - 1].paths)
+            {
+                p.currentSubwaveIndex = 0;
+            }
+
+            //The player gets a reward for completing the wave
+            ResourceManager.changeResourceAction?.Invoke("gold", waves[currentWaveIndex - 1].waveReward);
+            ResourceManager.changeResourceAction?.Invoke("waves", 1);
+        }
+        //Else, the level is complete
+        else
+        {
+            EventBus<LevelCompleteEvent>.Raise(new LevelCompleteEvent(true));
+        }
+        
+        //Set the wave in progress to false, so that the player can start another wave
         canStartWave = true;
     }
 }

@@ -13,8 +13,8 @@ using UnityEngine.UI;
 public class TowerCost
 {
     public Tower tower;
-    public TMP_Text costText;
     public TMP_Text towerNameText;
+    public TMP_Text costText;
 }
 public class Shop : MonoBehaviour
 {

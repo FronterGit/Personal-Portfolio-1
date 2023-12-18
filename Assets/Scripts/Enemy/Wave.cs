@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Timeline.Actions;
@@ -7,11 +8,20 @@ public class Wave : MonoBehaviour
 {
     [SerializeField] public List<Path> paths;
     public int waveReward;
+
+    public void OnExitPlayMode()
+    {
+        foreach(Path path in paths)
+        {
+            path.currentSubwaveIndex = 0;
+        }
+    }
 }
 
 [System.Serializable]
 public class Path
 {
+    public int currentSubwaveIndex = 0;
     [SerializeField] public List<Subwave> subwaves;
 }
 
