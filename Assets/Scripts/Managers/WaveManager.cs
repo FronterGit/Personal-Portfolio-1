@@ -28,7 +28,7 @@ public class WaveManager : MonoBehaviour
         //Unity sucks and doesn't reset the current subwave index when exiting play mode, so we have to do it ourselves
         foreach(Wave w in waves)
         {
-            w.OnExitPlayMode();
+            w.Reset();
         }
     }
 
@@ -44,6 +44,9 @@ public class WaveManager : MonoBehaviour
         //If there is no wave in progress, start the wave
         if (!waveInProgress && canStartWave)
         {
+            //Reset the tower attacked time
+            EventBus<ResetTowerAttackedTimeEvent>.Raise(new ResetTowerAttackedTimeEvent());
+            
             //We must start a coroutine for each separate path.
             int p = 0;
             foreach (Path path in waves[currentWaveIndex].paths)
@@ -123,6 +126,9 @@ public class WaveManager : MonoBehaviour
 
     public void OnWaveFinished(WaveFinishedEvent e)
     {
+        //If the player is already able to start another wave, return
+        if(canStartWave) return;
+        
         //If there is another wave, increment the wave index and reset the subwave index
         if(ResourceManager.getResourceValueFunc?.Invoke("totalWaves") >= ResourceManager.getResourceValueFunc?.Invoke("waves") + 1)
         {
@@ -143,7 +149,7 @@ public class WaveManager : MonoBehaviour
             EventBus<LevelCompleteEvent>.Raise(new LevelCompleteEvent(true));
         }
         
-        //Set the wave in progress to false, so that the player can start another wave
+        //Let the player start another wave
         canStartWave = true;
     }
 }

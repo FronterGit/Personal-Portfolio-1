@@ -116,4 +116,8 @@ namespace EventBus {
             this.win = win;
         }
     }
+    
+    public class ResetTowerAttackedTimeEvent : Event {
+        public ResetTowerAttackedTimeEvent() { }
+    }
 }

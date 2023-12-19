@@ -9,7 +9,7 @@ public class Wave : MonoBehaviour
     [SerializeField] public List<Path> paths;
     public int waveReward;
 
-    public void OnExitPlayMode()
+    public void Reset()
     {
         foreach(Path path in paths)
         {

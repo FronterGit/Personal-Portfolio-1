@@ -445,7 +445,7 @@ MonoBehaviour:
   attackSpeed: 0
   internalAttackSpeed: 0
   bulletSpeed: 0
-  cost: 1
+  cost: 50
   towerName: BuffTower
   bulletPrefab: {fileID: 0}
   placePrefab: {fileID: 7516184778551912310, guid: be9d59be48ebd7c4fb9d3b6a09f74852, type: 3}
@@ -455,5 +455,5 @@ MonoBehaviour:
   rangeIndicator: {fileID: 7461551801908078530}
   enemiesInRange: []
   selected: 0
-  attackSpeedModifier: 1.2
+  attackSpeedModifier: 2
   buffedTowers: []

@@ -30,6 +30,12 @@ public class ResourceManager : MonoBehaviour
         changeResourceAction -= ChangeResource;
         getResourceValueFunc -= GetResourceValue;
         resetResourcesAction -= ResetResources;
+
+        foreach (Resource resource in resources)
+        {
+            //Reset the resources when we disable the script
+            resource.Reset();
+        }
         
     }
 

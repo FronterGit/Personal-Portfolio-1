@@ -5634,6 +5634,7 @@ MonoBehaviour:
   - {fileID: 5928658722464366123, guid: d21a8917c2447394d82cdd1bbbeb05df, type: 3}
   - {fileID: 5928658722464366123, guid: 253e5e4189b8c7d479a05b765e1ce1e3, type: 3}
   - {fileID: 5928658722464366123, guid: 822952c8af082184db6a9462a35f5352, type: 3}
+  - {fileID: 5928658722464366123, guid: 6c78d575a4f4b7f49b8996ab042e791d, type: 3}
   currentWaveIndex: 0
   currentSubwaveIndex: 0
   waveInProgress: 0
@@ -5925,7 +5926,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 514613199, guid: 62de5f0e6cca9674f95f259d168dbf40, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 172179335733205006, guid: 62de5f0e6cca9674f95f259d168dbf40, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -5934,6 +5935,10 @@ PrefabInstance:
     - target: {fileID: 172179336039456804, guid: 62de5f0e6cca9674f95f259d168dbf40, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 172179336039456804, guid: 62de5f0e6cca9674f95f259d168dbf40, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 172179336039456984, guid: 62de5f0e6cca9674f95f259d168dbf40, type: 3}
       propertyPath: m_Pivot.x

@@ -31,15 +31,19 @@ public abstract class Tower : MonoBehaviour {
     private List<SpriteRenderer> spriteRenderers = new List<SpriteRenderer>();
     public bool selected;
 
+    protected float attackedTime;
+
     private bool buffed = false;
 
 
     protected virtual void OnEnable() {
         EventBus<MouseInputEvent>.Subscribe(CheckMouseOnTower);
+        EventBus<ResetTowerAttackedTimeEvent>.Subscribe(ResetAttackTime);
     }
 
     protected virtual void OnDisable() {
         EventBus<MouseInputEvent>.Unsubscribe(CheckMouseOnTower);
+        EventBus<ResetTowerAttackedTimeEvent>.Unsubscribe(ResetAttackTime);
     }
 
     protected virtual void Start() {
@@ -58,15 +62,23 @@ public abstract class Tower : MonoBehaviour {
         foreach (SpriteRenderer s in this.GetComponentsInChildren<SpriteRenderer>()) {
             spriteRenderers.Add(s);
         }
+        
+        attackedTime = Time.time;
     }
 
-    protected virtual IEnumerator FireCooldown(float wait) {
+    protected virtual IEnumerator FireCooldown(float wait, float delay = 0f) {
+        //If there is a delay, wait for the delay before shooting
+        if (delay > 0) yield return new WaitForSeconds(delay);
+        
         //If there are enemies in range...
         if (enemiesInRange.Count > 0) {
             //...set the target to the first enemy in range,
             SetTarget(enemiesInRange);
 
             if (target != null) {
+                //Remember when you last attacked
+                attackedTime = Time.time;
+                
                 Attack();
             }
 
@@ -127,11 +139,21 @@ public abstract class Tower : MonoBehaviour {
     //Keep track of enemies in range
     private void OnTriggerEnter2D(Collider2D collision) {
         //If an enemy enters the tower's range, add it to the list of enemies in range
-        if (collision.CompareTag("Enemy")) {
-            enemiesInRange.Add(collision.GetComponent<Enemy>());
+        if (collision.CompareTag("Enemy"))
+        {
+                enemiesInRange.Add(collision.GetComponent<Enemy>());
 
-            //If this is the first enemy to come into range, start shooting
-            if (enemiesInRange.Count == 1) StartCoroutine(FireCooldown(internalAttackSpeed));
+                //If we haven't shot in a while, start shooting
+                if (Time.time - attackedTime > internalAttackSpeed)
+                {
+                    StartCoroutine(FireCooldown(internalAttackSpeed));
+                }
+                //If we have shot recently, but a new enemy has entered the range, wait for the time until we can shoot again
+                else if (enemiesInRange.Count == 1)
+                {
+                    //wait for the time until we can shoot again
+                    StartCoroutine(FireCooldown(internalAttackSpeed, internalAttackSpeed - (Time.time - attackedTime)));
+                }
         }
     }
 
@@ -139,14 +161,19 @@ public abstract class Tower : MonoBehaviour {
         //If an enemy leaves the tower's range, remove it from the list of enemies in range
         if (collision.CompareTag("Enemy")) {
             enemiesInRange.Remove(collision.GetComponent<Enemy>());
-
-
+            
             //If there are no more enemies in range, stop shooting
             if (enemiesInRange.Count == 0) StopAllCoroutines();
         }
     }
 
     protected List<Enemy> toRemoveAtEndOfFrame = new();
+    
+    private void ResetAttackTime(ResetTowerAttackedTimeEvent e)
+    {
+        attackedTime = Time.time;
+    }
+    
 
     #endregion
 

@@ -13,5 +13,11 @@ public class Resource
 
     public static List<Resource> resources = new();
     public static Overseer<System.Guid, Dictionary<string, Resource>> resourcesContainer = new();
+    
+    public void Reset()
+    {
+        resources.Clear();
+        resourcesContainer.Clear();
+    }
 }
 

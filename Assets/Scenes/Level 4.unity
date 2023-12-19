@@ -255,6 +255,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &201848472
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 201848474}
+  - component: {fileID: 201848473}
+  m_Layer: 0
+  m_Name: Cheats
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &201848473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 201848472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc5f4264a25000942a2d7aff4c33ae5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &201848474
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 201848472}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.454288, y: 4.523247, z: 0.21740627}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &285638000 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1349677957, guid: 62de5f0e6cca9674f95f259d168dbf40, type: 3}
@@ -3004,7 +3048,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resources:
   - name: gold
-    value: 20
+    value: 75
     text: {fileID: 655403094}
   - name: lives
     value: 25
@@ -3076,9 +3120,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waves:
-  - {fileID: 5928658722464366123, guid: e159efee18fd102488ca2cb7e5b11e9e, type: 3}
-  - {fileID: 5928658722464366123, guid: 13ebb4d305eca604bb1ed883b4878fe9, type: 3}
-  - {fileID: 5928658722464366123, guid: 24b6ba3b92bd6924bb1c1e3c86f46378, type: 3}
+  - {fileID: 5928658722464366123, guid: b9544e15f69285142b8aa23b3ea70152, type: 3}
+  - {fileID: 5928658722464366123, guid: 2b26ccf2f9332dc4b8e08cdeb9fe5dfd, type: 3}
   currentWaveIndex: 0
   currentSubwaveIndex: 0
   waveInProgress: 0
@@ -6971,6 +7014,14 @@ PrefabInstance:
     - target: {fileID: 1444737836, guid: 62de5f0e6cca9674f95f259d168dbf40, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 172179335733205006, guid: 62de5f0e6cca9674f95f259d168dbf40, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1397178027}
+    - target: {fileID: 172179335733205006, guid: 62de5f0e6cca9674f95f259d168dbf40, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: StartWave
       objectReference: {fileID: 0}
     - target: {fileID: 172179336039456804, guid: 62de5f0e6cca9674f95f259d168dbf40, type: 3}
       propertyPath: m_Name

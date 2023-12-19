@@ -29,9 +29,16 @@ public class MageTower : Tower
         enemiesToRemove.ForEach(e => enemiesInRange.Remove(e));
     }
 
-    protected override IEnumerator FireCooldown(float wait) {
+    protected override IEnumerator FireCooldown(float wait, float delay = 0f) 
+    {
+        //If there is a delay, wait for the delay before shooting
+        if (delay > 0) yield return new WaitForSeconds(delay);
+        
         //If there are enemies in range...
         if (enemiesInRange.Count > 0) {
+            //Remember the time when we attack
+            attackedTime = Time.time;
+            
             //Call the attack method
             Attack();
             
@@ -40,6 +47,7 @@ public class MageTower : Tower
             StartCoroutine(FireCooldown(internalAttackSpeed));
         } else yield return null;
     }
+
 
     protected override void OnTriggerExit2D(Collider2D collision) {
         //If an enemy leaves the tower's range, remove it from the list of enemies in range

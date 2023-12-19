@@ -85,6 +85,7 @@ public class EnemyManager : MonoBehaviour {
         Destroy(e.enemy);
 
         if (enemies.Count == 0 && WaveManager.getWaveInProgressFunc?.Invoke() == false) {
+            Debug.Log("Wave finished");
             EventBus<WaveFinishedEvent>.Raise(new WaveFinishedEvent());
         }
     }

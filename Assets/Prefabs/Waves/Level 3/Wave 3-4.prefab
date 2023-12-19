@@ -51,9 +51,9 @@ MonoBehaviour:
       amountToSpawn: 5
       timeBetweenSpawns: 1
       timeBetweenSubwaves: 0
-    - enemyPrefab: {fileID: 9530430136141074, guid: 3de2c2ca9af9323488505330f999922f, type: 3}
-      amountToSpawn: 12
-      timeBetweenSpawns: 0.1
+    - enemyPrefab: {fileID: 9530430136141074, guid: 5f5720d54e6f47b408648052089c3fef, type: 3}
+      amountToSpawn: 1
+      timeBetweenSpawns: 0.5
       timeBetweenSubwaves: 0
   - currentSubwaveIndex: 0
     subwaves:
@@ -61,12 +61,8 @@ MonoBehaviour:
       amountToSpawn: 5
       timeBetweenSpawns: 1
       timeBetweenSubwaves: 0
-    - enemyPrefab: {fileID: 9530430136141074, guid: 3de2c2ca9af9323488505330f999922f, type: 3}
-      amountToSpawn: 12
-      timeBetweenSpawns: 0.2
+    - enemyPrefab: {fileID: 9530430136141074, guid: 433e59092335e0b4abd879aa0aebddc4, type: 3}
+      amountToSpawn: 3
+      timeBetweenSpawns: 0.5
       timeBetweenSubwaves: 0
-    - enemyPrefab: {fileID: 9530430136141074, guid: bb943eddf619aab42bb95a0809ce04ab, type: 3}
-      amountToSpawn: 1
-      timeBetweenSpawns: 1
-      timeBetweenSubwaves: 0
-  waveReward: 20
+  waveReward: 10
